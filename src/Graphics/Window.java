@@ -1,3 +1,5 @@
+package Graphics;
+
 import javax.swing.*;
 
 public class Window extends JFrame {
@@ -14,8 +16,8 @@ public class Window extends JFrame {
 
     /**
      * Algorytm Singleton
-     * @return Przy każdym wywołaniu zwraca ten sam obiekt klasy Window, dzięki czemu mamy pewność, że w programie
-     * powstanie tylko jeden obiekt klasy Window.
+     * @return Przy każdym wywołaniu zwraca ten sam obiekt klasy Graphics.Window, dzięki czemu mamy pewność, że w programie
+     * powstanie tylko jeden obiekt klasy Graphics.Window.
      */
     public static Window getInstance() {
         if (instance == null) {
