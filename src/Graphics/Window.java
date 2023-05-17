@@ -1,28 +1,36 @@
 package Graphics;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class Window extends JFrame {
-    private static Window instance;
 
-    private Window() {
+    private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    private int width = (int) screenSize.getWidth();
+    private int height = (int) screenSize.getHeight();
+
+    public Window() {
+
     super("GuiSet03");
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    setSize(1280,720);
+    setSize(width,height);
     setVisible(true);
+    setLayout(new BorderLayout());
 
+    JPanel VDBpanel = new VDBpanel(width/3, height);
+    //JPanel VRDpanel = new VRDpanel(width/3,height/3);
 
+    this.getContentPane().add(VDBpanel,BorderLayout.WEST);
+    //this.getContentPane().add(VRDpanel,BorderLayout.EAST);
     }
 
-    /**
-     * Algorytm Singleton
-     * @return Przy każdym wywołaniu zwraca ten sam obiekt klasy Graphics.Window, dzięki czemu mamy pewność, że w programie
-     * powstanie tylko jeden obiekt klasy Graphics.Window.
-     */
-    public static Window getInstance() {
-        if (instance == null) {
-            instance = new Window();
-        }
-        return instance;
+    @Override
+    public int getWidth() {
+        return width;
+    }
+
+    @Override
+    public int getHeight() {
+        return height;
     }
 }
