@@ -49,14 +49,9 @@ public class VDBpanel extends JPanel {
                 viewportView.repaint();
                 deviceScrollPane.revalidate();
                 deviceScrollPane.repaint();
-               /* revalidate();
-                repaint();*/
+
             }
         });
-
-
-
-
         add(deviceScrollPane,BorderLayout.CENTER);
         add(addButton,BorderLayout.SOUTH);
 

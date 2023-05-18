@@ -18,12 +18,12 @@ public class Window extends JFrame {
     setLayout(new BorderLayout());
 
     JPanel VDBpanel = new VDBpanel();
-    //JPanel VRDpanel = new VRDpanel(width/3,height/3);
+    JPanel VRDpanel = new VRDpanel();
 
 
 
     this.getContentPane().add(VDBpanel,BorderLayout.WEST);
-    //this.getContentPane().add(VRDpanel,BorderLayout.EAST);
+    this.getContentPane().add(VRDpanel,BorderLayout.EAST);
     }
 
     @Override
