@@ -17,8 +17,10 @@ public class Window extends JFrame {
     setVisible(true);
     setLayout(new BorderLayout());
 
-    JPanel VDBpanel = new VDBpanel(width/3, height);
+    JPanel VDBpanel = new VDBpanel();
     //JPanel VRDpanel = new VRDpanel(width/3,height/3);
+
+
 
     this.getContentPane().add(VDBpanel,BorderLayout.WEST);
     //this.getContentPane().add(VRDpanel,BorderLayout.EAST);
