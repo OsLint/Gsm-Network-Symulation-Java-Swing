@@ -2,26 +2,26 @@ package Logic;
 
 import InterfaceLink.VDBlink;
 
-public class VDB extends Thread implements VDBlink {
+public class VDB implements VDBlink {
 
     //Pola prywatne
-    private static int countID;
+    private static int countId;
     private String message;
     private int frequency;
     private boolean isWorking;
     private boolean isWaiting;
-    private int ID;
+    private int Id;
 
     //Konstruktor
     public VDB( String message) {
-        countID++;
+        countId++;
         this.message = message;
-        this.frequency = 10;
+        this.frequency = 1;
         this.isWorking = true;
         this.isWaiting = false;
-        this.ID = countID;
+        this.Id = countId;
     }
-    //Nadpisane metody z Interfejsu
+    //Settery
     @Override
     public void setMessage(String message) {
         this.message= message;
@@ -38,6 +38,8 @@ public class VDB extends Thread implements VDBlink {
     public void setIsWaiting(boolean waiting) {
         this.isWaiting = waiting;
     }
+
+    //Gettery
     @Override
     public String getMessage() {
         return message;
@@ -48,7 +50,7 @@ public class VDB extends Thread implements VDBlink {
     }
     @Override
     public int getID() {
-        return ID;
+        return Id;
     }
     @Override
     public boolean getIsWorking() {

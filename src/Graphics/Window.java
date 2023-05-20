@@ -1,7 +1,14 @@
 package Graphics;
 
+import Graphics.Panels.LayerPanel;
+import Graphics.Panels.VDBpanel;
+import Graphics.Panels.VRDpanel;
+import Logic.FileHandler;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowAdapter;
 
 public class Window extends JFrame {
 
@@ -17,12 +24,23 @@ public class Window extends JFrame {
     setVisible(true);
     setLayout(new BorderLayout());
 
-    JPanel VDBpanel = new VDBpanel();
-    JPanel VRDpanel = new VRDpanel();
+    addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                FileHandler fileHandler = new FileHandler("test1");
+            }
+        });
+
+
+
+    VDBpanel VDBpanel = new VDBpanel("VDB Panel");
+    LayerPanel layerPanel = new LayerPanel("Layer Panel");
+    VRDpanel VRDpanel = new VRDpanel("VRD Panel");
 
 
 
     this.getContentPane().add(VDBpanel,BorderLayout.WEST);
+    this.getContentPane().add(layerPanel,BorderLayout.CENTER);
     this.getContentPane().add(VRDpanel,BorderLayout.EAST);
     }
 

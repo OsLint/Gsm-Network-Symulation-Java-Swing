@@ -4,12 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93f26dbf-e6d3-4fdd-a663-ba64ff6526ab" name="Changes" comment="init">
-      <change afterPath="$PROJECT_DIR$/src/Graphics/PanelTemplate.java" afterDir="false" />
+    <list default="true" id="93f26dbf-e6d3-4fdd-a663-ba64ff6526ab" name="Changes" comment="addPanelTemplate">
+      <change afterPath="$PROJECT_DIR$/src/Exeptions/NumberNotFoundExeption.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Graphics/Panels/LayerPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Graphics/Panels/VRDpanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Graphics/Visualisations/LayerVisual.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Graphics/Visualisations/StationVisual.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Graphics/Visualisations/VDBvisual.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Graphics/Visualisations/VRDvisual.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/InterfaceLink/StationLink.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/InterfaceLink/VRDlink.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Logic/Station.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Logic/StationType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Graphics/VDBpanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Graphics/VDBpanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Graphics/VRDpanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Graphics/VRDpanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Graphics/PanelTemplate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Graphics/Panels/PanelTemplate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Graphics/VDBpanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Graphics/Panels/VDBpanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Graphics/VRDpanel.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Graphics/Window.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Graphics/Window.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Logic/FileHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Logic/FileHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Logic/VDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Logic/VDB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Logic/VRD.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Logic/VRD.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,7 +90,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1684142204056</updated>
-      <workItem from="1684142205744" duration="25727000" />
+      <workItem from="1684142205744" duration="45071000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1684163803479</created>
@@ -105,14 +120,33 @@
       <option name="project" value="LOCAL" />
       <updated>1684401979354</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="addPanelTemplate">
+      <created>1684402847189</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1684402847189</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="init" />
-    <option name="LAST_COMMIT_MESSAGE" value="init" />
+    <MESSAGE value="addPanelTemplate" />
+    <option name="LAST_COMMIT_MESSAGE" value="addPanelTemplate" />
   </component>
 </project>
