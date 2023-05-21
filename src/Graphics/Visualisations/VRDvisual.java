@@ -17,6 +17,7 @@ public class VRDvisual extends JPanel {
         setMaximumSize(new Dimension(Integer.MAX_VALUE,200));
         setMinimumSize(new Dimension(Integer.MAX_VALUE, 200));
 
+
         //Inicjalizacja komponentów
         idTextField = new JTextField("ID: " + vrDlink.getID());
         stopButton = new JButton("Stop");

@@ -14,9 +14,14 @@ public class LayerPanel extends PanelTemplate{
 
     //ArrayList<LayerVisual> layers = new ArrayList<>();
     JButton deleteButton;
+   // LayerVisual leftLayer;
+    //LayerVisual rightLayer;
 
     public LayerPanel(String title) {
         super(title);
+
+      //  leftLayer = new LayerVisual();
+      //  rightLayer = new LayerVisual();
 
         addButton.setText("+");
         deleteButton = new JButton("-");
@@ -54,6 +59,8 @@ public class LayerPanel extends PanelTemplate{
         });
 
 
+        //add(rightLayer,BorderLayout.EAST);
+        //add(leftLayer,BorderLayout.WEST);
         add(buttonPanel,BorderLayout.SOUTH);
 
 

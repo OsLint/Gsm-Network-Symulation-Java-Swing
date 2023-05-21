@@ -19,6 +19,7 @@ public class VDBvisual extends JPanel {
         setMaximumSize(new Dimension(Integer.MAX_VALUE,200));
         setMinimumSize(new Dimension(Integer.MAX_VALUE, 200));
 
+
         //Inicjalizacja komponentów
         messageLabel = new JLabel("Message: " + vdBlink.getMessage());
         frequencySlider = new JSlider(JSlider.HORIZONTAL,1,5,vdBlink.getFrequency());
