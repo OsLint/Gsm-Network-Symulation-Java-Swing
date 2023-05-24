@@ -2,7 +2,10 @@ package Logic;
 
 import InterfaceLink.VDBlink;
 
-public class VDB implements VDBlink {
+import javax.swing.*;
+import java.util.Random;
+
+public class VDB implements VDBlink ,Runnable {
 
     //Pola prywatne
     private static int countId;
@@ -61,34 +64,33 @@ public class VDB implements VDBlink {
         return isWaiting;
     }
 
-//Medota odpowiedzialna za wątek
-    /*private void startWorkingThread() {
-        Thread workingThread = new Thread(() -> {
-            while (isWorking) {
-                // Symulacja pracy urządzenia
+    //Medota odpowiedzialna za wątek
+    @Override
+    public void run() {
+        while (isWorking) {
+            //Sprawdzamy status urządzenia
+            if(isWaiting) {
                 try {
-                    Thread.sleep(frequency * 1000);
-                } catch (InterruptedException e) {
+                    Thread.sleep(100);
+                    System.out.println("test0");
+                }catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+            }else {
+                //Wygenerowanie losowego numeru telefonu
+                //2DO: numer ma być generowany spośród numerów istniejących bts
+                int btsNumber = new Random().nextInt();
 
-                // Zmiana statusu urządzenia na "WAITING"
-                isWaiting = true;
-                statusComboBox.setSelectedItem("WAITING");
-
-                // Symulacja oczekiwania na odpowiedź
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                // Zmiana statusu urządzenia na "ACTIVE"
-                isWaiting = false;
-                statusComboBox.setSelectedItem("ACTIVE");
             }
-        });
+            try {
+                Thread.sleep(1000 / frequency);
+                System.out.println("test1");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
-        workingThread.start();
-    }*/
+
+
 }
