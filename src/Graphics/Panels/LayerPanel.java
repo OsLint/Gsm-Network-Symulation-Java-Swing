@@ -14,14 +14,14 @@ public class LayerPanel extends PanelTemplate{
 
     //ArrayList<LayerVisual> layers = new ArrayList<>();
     JButton deleteButton;
-   // LayerVisual leftLayer;
-    //LayerVisual rightLayer;
+    LayerVisual leftLayer;
+    LayerVisual rightLayer;
 
     public LayerPanel(String title) {
         super(title);
 
-      //  leftLayer = new LayerVisual();
-      //  rightLayer = new LayerVisual();
+       leftLayer = new LayerVisual("BTS");
+       rightLayer = new LayerVisual("BTS");
 
         addButton.setText("+");
         deleteButton = new JButton("-");
@@ -59,8 +59,8 @@ public class LayerPanel extends PanelTemplate{
         });
 
 
-        //add(rightLayer,BorderLayout.EAST);
-        //add(leftLayer,BorderLayout.WEST);
+        viewportView.add(rightLayer,BorderLayout.EAST);
+        viewportView.add(leftLayer,BorderLayout.WEST);
         add(buttonPanel,BorderLayout.SOUTH);
 
 
@@ -69,8 +69,8 @@ public class LayerPanel extends PanelTemplate{
     @Override
     protected void handleAddButtonAction(ActionEvent e) {
     //2DO:
-        LayerVisual newLayer = new LayerVisual();
-        viewportView.add(newLayer);
+        LayerVisual newLayer = new LayerVisual("BSC");
+        viewportView.add(newLayer,BorderLayout.CENTER);
         viewportView.revalidate();
         viewportView.repaint();
         deviceScrollPane.revalidate();

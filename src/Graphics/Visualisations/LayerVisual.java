@@ -17,7 +17,7 @@ public class LayerVisual extends JPanel {
 
 
     //public LayerVisual(StationType stationType) {
-    public LayerVisual() {
+    public LayerVisual(String title) {
 
         /*switch (stationType) {
             case BSC -> title = "BSC";
@@ -25,7 +25,7 @@ public class LayerVisual extends JPanel {
             case BTSout -> title = "BTS(out)";
             default -> throw new IllegalArgumentException();
         }*/
-        title = "test";
+        this.title = title;
         setPreferredSize(new Dimension(
                 (Toolkit.getDefaultToolkit().getScreenSize().width)/9,
                 Toolkit.getDefaultToolkit().getScreenSize().height
