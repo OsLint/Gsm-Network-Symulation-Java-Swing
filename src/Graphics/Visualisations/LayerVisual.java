@@ -8,6 +8,9 @@ import Logic.StationType;
 import javax.swing.*;
 import java.awt.*;
 
+
+
+
 public class LayerVisual extends JPanel {
     private JScrollPane deviceScrollPane;
     private StationVisual baseStation;
@@ -66,5 +69,9 @@ public class LayerVisual extends JPanel {
         add(titleLabel,BorderLayout.NORTH);
         layerViewPort.add(baseStation,BorderLayout.NORTH);
 
+    }
+
+    public String getTitle() {
+        return title;
     }
 }

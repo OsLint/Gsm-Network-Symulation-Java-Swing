@@ -1,7 +1,6 @@
 package Graphics.Panels;
 
 import Graphics.Visualisations.LayerVisual;
-import Graphics.Visualisations.StationVisual;
 import Logic.StationType;
 
 import javax.swing.*;
@@ -10,18 +9,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class LayerPanel extends PanelTemplate{
+public class LayerPanel extends PanelTemplate {
 
-    //ArrayList<LayerVisual> layers = new ArrayList<>();
     JButton deleteButton;
-    LayerVisual leftLayer;
-    LayerVisual rightLayer;
+    ArrayList<LayerVisual> layers = new ArrayList<>();
 
     public LayerPanel(String title) {
         super(title);
-
-       leftLayer = new LayerVisual("BTS");
-       rightLayer = new LayerVisual("BTS");
 
         addButton.setText("+");
         deleteButton = new JButton("-");
@@ -30,23 +24,20 @@ public class LayerPanel extends PanelTemplate{
         deleteButton.setMargin(new Insets(5, 10, 5, 10));
         addButton.setMargin(new Insets(5, 10, 5, 10));
 
-        viewportView.setLayout(new BoxLayout(viewportView,BoxLayout.X_AXIS));
+        viewportView.setLayout(new BoxLayout(viewportView, BoxLayout.X_AXIS));
 
         //Device ScrollPane
         deviceScrollPane.setViewportView(viewportView);
         deviceScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
         deviceScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
-
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BorderLayout());
-        buttonPanel.add(addButton,BorderLayout.WEST);
-        buttonPanel.add(deleteButton,BorderLayout.EAST);
+        buttonPanel.add(addButton, BorderLayout.WEST);
+        buttonPanel.add(deleteButton, BorderLayout.EAST);
 
-        // Wyświetlanie kolorów przycisków
-
-        deleteButton.setForeground(new Color(255,0,0));
-        addButton.setForeground(new Color(0,255,0));
+        deleteButton.setForeground(new Color(255, 0, 0));
+        addButton.setForeground(new Color(0, 255, 0));
 
         titleTextField.setHorizontalAlignment(SwingConstants.CENTER);
         add(titleTextField, BorderLayout.NORTH);
@@ -58,26 +49,63 @@ public class LayerPanel extends PanelTemplate{
             }
         });
 
-
-        viewportView.add(rightLayer,BorderLayout.EAST);
-        viewportView.add(leftLayer,BorderLayout.WEST);
-        add(buttonPanel,BorderLayout.SOUTH);
-
-
+        add(buttonPanel, BorderLayout.SOUTH);
+        layers.add(new LayerVisual("BTS"));
+        layers.add(new LayerVisual("BSC"));
+        layers.add(new LayerVisual("BTS"));
+        updateViewportView();
     }
 
     @Override
     protected void handleAddButtonAction(ActionEvent e) {
-    //2DO:
         LayerVisual newLayer = new LayerVisual("BSC");
-        viewportView.add(newLayer,BorderLayout.CENTER);
+        int insertIndex = layers.size() / 2; // Dodawanie na środek
+
+        layers.add(insertIndex, newLayer);
+
+        updateViewportView();
+    }
+
+    private void updateViewportView() {
+        viewportView.removeAll();
+
+        for (LayerVisual layer : layers) {
+            viewportView.add(layer);
+        }
+
         viewportView.revalidate();
         viewportView.repaint();
         deviceScrollPane.revalidate();
         deviceScrollPane.repaint();
-
     }
-    void handleDeleteButtonAction(ActionEvent e) {
-      //2DO:
+
+    private void handleDeleteButtonAction(ActionEvent e) {
+        if (layers.size() > 2) {
+            LayerVisual lastLayer = layers.get(layers.size() - 1);
+            String layerType = lastLayer.getTitle();
+
+            if (layerType.equals("BTS")) {
+                int bscCount = 0;
+
+                for (int i = layers.size() - 2; i >= 0; i--) {
+                    if (layers.get(i).getTitle().equals("BSC")) {
+                        bscCount++;
+                    }
+                }
+
+                if (bscCount > 1) {
+                    for (int i = layers.size() - 1; i >= 0; i--) {
+                        if (layers.get(i).getTitle().equals("BSC")) {
+                            layers.remove(i);
+                            break;
+                        }
+                    }
+                }
+            } else {
+                layers.remove(layers.size() - 1);
+            }
+
+            updateViewportView();
+        }
     }
 }
