@@ -1,29 +1,23 @@
 package Graphics.Panels;
 
 import Graphics.Visualisations.LayerVisual;
-import Logic.StationType;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+
+import static Graphics.Window.layers;
 
 public class LayerPanel extends PanelTemplate {
-
     JButton deleteButton;
-    ArrayList<LayerVisual> layers = new ArrayList<>();
-
     public LayerPanel(String title) {
         super(title);
-
         addButton.setText("+");
         deleteButton = new JButton("-");
         addButton.setAlignmentX(Component.LEFT_ALIGNMENT);
         deleteButton.setAlignmentX(Component.RIGHT_ALIGNMENT);
         deleteButton.setMargin(new Insets(5, 10, 5, 10));
         addButton.setMargin(new Insets(5, 10, 5, 10));
-
         viewportView.setLayout(new BoxLayout(viewportView, BoxLayout.X_AXIS));
 
         //Device ScrollPane
@@ -48,6 +42,7 @@ public class LayerPanel extends PanelTemplate {
                 handleDeleteButtonAction(e);
             }
         });
+
 
         add(buttonPanel, BorderLayout.SOUTH);
         layers.add(new LayerVisual("BTS"));
@@ -100,12 +95,19 @@ public class LayerPanel extends PanelTemplate {
                             break;
                         }
                     }
+                }else {
+                    showInfoDialog("Error","Osiągnięta minimalną ilość warstw...");
                 }
             } else {
-                layers.remove(layers.size() - 1);
+               layers.remove(layers.size() - 1);
             }
 
             updateViewportView();
         }
     }
+
+    private void showInfoDialog(String title, String message) {
+            JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
+    }
+
 }

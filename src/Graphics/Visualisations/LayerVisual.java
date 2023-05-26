@@ -1,15 +1,8 @@
 package Graphics.Visualisations;
 
-
-import InterfaceLink.StationLink;
 import Logic.Station;
-import Logic.StationType;
-
 import javax.swing.*;
 import java.awt.*;
-
-
-
 
 public class LayerVisual extends JPanel {
     private JScrollPane deviceScrollPane;
@@ -17,17 +10,8 @@ public class LayerVisual extends JPanel {
     private JLabel titleLabel;
     private String title;
     private JPanel layerViewPort;
-
-
-    //public LayerVisual(StationType stationType) {
     public LayerVisual(String title) {
 
-        /*switch (stationType) {
-            case BSC -> title = "BSC";
-            case BTSin -> title ="BTS(in)";
-            case BTSout -> title = "BTS(out)";
-            default -> throw new IllegalArgumentException();
-        }*/
         this.title = title;
         setPreferredSize(new Dimension(
                 (Toolkit.getDefaultToolkit().getScreenSize().width)/9,
@@ -58,12 +42,6 @@ public class LayerVisual extends JPanel {
         deviceScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         deviceScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-        /*for (int i = 0; i < 10; i++) {
-            layerViewPort.add(new StationVisual(new Station()));
-            layerViewPort.revalidate();
-            layerViewPort.repaint();
-        }
-*/
 
         add(deviceScrollPane,BorderLayout.CENTER);
         add(titleLabel,BorderLayout.NORTH);

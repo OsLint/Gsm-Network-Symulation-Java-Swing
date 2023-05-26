@@ -60,6 +60,17 @@ public class VRD implements VRDlink {
     public void countMessage() {
         receivedMessageCounter++;
     }
+
+    @Override
+    public void reciveMessage(String message) {
+
+    }
+
+    @Override
+    public void processMessages() {
+
+    }
+
     @Override
     public void startResetMessageCount() {
 

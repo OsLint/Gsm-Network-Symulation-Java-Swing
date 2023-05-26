@@ -24,6 +24,12 @@ public class VDB implements VDBlink ,Runnable {
         this.isWaiting = false;
         this.Id = countId;
     }
+
+    @Override
+    public void sendMessage(String adress, String message) {
+
+    }
+
     //Settery
     @Override
     public void setMessage(String message) {

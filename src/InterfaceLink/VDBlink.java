@@ -2,6 +2,7 @@ package InterfaceLink;
 
 
 public interface VDBlink {
+    void sendMessage(String adress,String message);
     void setMessage(String message);
     void setFrequency(int frequency);
     void setIsWorking(boolean working);
