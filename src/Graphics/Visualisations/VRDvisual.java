@@ -1,16 +1,19 @@
 package Graphics.Visualisations;
 
 import InterfaceLink.VRDlink;
+import Logic.VRD;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class VRDvisual extends JPanel {
-    JTextField idTextField;
-    JButton stopButton;
-    JLabel messageCounter;
-    JCheckBox clearTimeCheckBox;
+    private JTextField idTextField;
+    private JButton stopButton;
+    private JLabel messageCounter;
+    private JCheckBox clearTimeCheckBox;
+    private VRDlink tempVRD;
 
     public VRDvisual (VRDlink vrDlink) {
         setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
@@ -19,6 +22,7 @@ public class VRDvisual extends JPanel {
 
 
         //Inicjalizacja komponentów
+        tempVRD = vrDlink;
         idTextField = new JTextField("ID: " + vrDlink.getID());
         stopButton = new JButton("Stop");
         messageCounter = new JLabel(
@@ -77,5 +81,7 @@ public class VRDvisual extends JPanel {
 
     }
 
-
+    public VRDlink getTempVRD() {
+        return tempVRD;
+    }
 }

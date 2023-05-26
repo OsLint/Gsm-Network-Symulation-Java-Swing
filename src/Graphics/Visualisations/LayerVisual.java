@@ -3,13 +3,16 @@ package Graphics.Visualisations;
 import Logic.Station;
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class LayerVisual extends JPanel {
     private JScrollPane deviceScrollPane;
-    private StationVisual baseStation;
+    public ArrayList<Station> stationList;
+    //private StationVisual baseStation;
     private JLabel titleLabel;
     private String title;
     private JPanel layerViewPort;
+    private boolean end;
     public LayerVisual(String title) {
 
         this.title = title;
@@ -21,10 +24,14 @@ public class LayerVisual extends JPanel {
 
 
         //Inicjalizacja komponentów
-        baseStation = new StationVisual(new Station());
+        stationList = new ArrayList<>();
+        Station baseStation = new Station();
+        StationVisual baseStationVisual = new StationVisual(baseStation);
+        stationList.add(baseStation);
         titleLabel = new JLabel(title);
         deviceScrollPane = new JScrollPane();
         layerViewPort = new JPanel();
+
 
         //layerViewPort
         layerViewPort.setLayout(new BoxLayout(layerViewPort,BoxLayout.Y_AXIS));
@@ -45,11 +52,19 @@ public class LayerVisual extends JPanel {
 
         add(deviceScrollPane,BorderLayout.CENTER);
         add(titleLabel,BorderLayout.NORTH);
-        layerViewPort.add(baseStation,BorderLayout.NORTH);
+        layerViewPort.add(baseStationVisual,BorderLayout.NORTH);
 
     }
 
     public String getTitle() {
         return title;
     }
+
+    void addStation(){
+        Station sv = new Station();
+        stationList.add(sv);
+        StationVisual stationVisual = new StationVisual(sv);
+        layerViewPort.add(stationVisual);
+    }
+
 }

@@ -61,7 +61,7 @@ public class VDBvisual extends JPanel {
                     if (selectedStatus.equals("ACTIVE")){
                         vdBlink.setIsWaiting(false);
                         vdBlink.setIsWorking(true);
-
+                        vdBlink.run();
                         //System.out.println("Debug: " + vdBlink.getID() + " is Active");
                     } else if (selectedStatus.equals("WAITING")) {
                         vdBlink.setIsWaiting(true);

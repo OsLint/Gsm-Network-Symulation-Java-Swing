@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import static Graphics.Window.layers;
+import static Graphics.Window.showInfoDialog;
 
 public class LayerPanel extends PanelTemplate {
     JButton deleteButton;
@@ -48,6 +49,7 @@ public class LayerPanel extends PanelTemplate {
         layers.add(new LayerVisual("BTS"));
         layers.add(new LayerVisual("BSC"));
         layers.add(new LayerVisual("BTS"));
+
         updateViewportView();
     }
 
@@ -96,7 +98,7 @@ public class LayerPanel extends PanelTemplate {
                         }
                     }
                 }else {
-                    showInfoDialog("Error","Osiągnięta minimalną ilość warstw...");
+                    showInfoDialog("Error","Osiągnięta minimalną ilość warstw...",null);
                 }
             } else {
                layers.remove(layers.size() - 1);
@@ -106,8 +108,5 @@ public class LayerPanel extends PanelTemplate {
         }
     }
 
-    private void showInfoDialog(String title, String message) {
-            JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
-    }
 
 }

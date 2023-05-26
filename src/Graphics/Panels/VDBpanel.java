@@ -1,6 +1,7 @@
 package Graphics.Panels;
 
 import Graphics.Visualisations.VDBvisual;
+import Logic.Message;
 import Logic.VDB;
 
 import javax.swing.*;
@@ -20,7 +21,7 @@ public class VDBpanel extends PanelTemplate {
         String message = JOptionPane.showInputDialog("Wprowadź wiadomość:");
 
         // Utworzenie nowego urządzenia nadawczego na podstawie wprowadzonej wiadomości
-        VDBvisual newVDB = new VDBvisual(new VDB(message));
+        VDBvisual newVDB = new VDBvisual(new VDB(new Message(message)));
 
         // Dodanie nowego urządzenia do listy
         VDBlist.add(newVDB);

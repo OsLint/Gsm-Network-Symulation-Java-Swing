@@ -6,11 +6,13 @@ import javax.swing.*;
 import java.awt.*;
 
 public class StationVisual extends JPanel {
-    JLabel idLabel;
-    JLabel processedMessageCounterLabel;
-    JLabel waitingMessageCounterLabel;
+    private JLabel idLabel;
+    private JLabel processedMessageCounterLabel;
+    private JLabel waitingMessageCounterLabel;
+    private int messagesInDeck;
 
     public StationVisual(StationLink stationLink) {
+        this.messagesInDeck = stationLink.getWaitingMessageCounter();
         setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
         setMaximumSize(new Dimension(Integer.MAX_VALUE,200));
         setMinimumSize(new Dimension(Integer.MAX_VALUE, 200));
@@ -43,4 +45,15 @@ public class StationVisual extends JPanel {
         setBackground(new Color(248, 246, 244));
     }
 
+
+
+    @Override
+    public String toString() {
+        return "StationVisual{" +
+                "idLabel=" + idLabel +
+                ", processedMessageCounterLabel=" + processedMessageCounterLabel +
+                ", waitingMessageCounterLabel=" + waitingMessageCounterLabel +
+                ", messagesInDeck=" + messagesInDeck +
+                '}';
+    }
 }
