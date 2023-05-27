@@ -16,11 +16,14 @@ public class VRDpanel extends PanelTemplate{
     @Override
     protected void handleAddButtonAction(ActionEvent e) {
         // Utworzenie nowego urządzenia odbiorczego
-        VRDvisual newVRD = new VRDvisual(new VRD());
-        VRDlist.add(newVRD);
+        VRD newVRD = new VRD();
+        VRDvisual newVRDvisual = new VRDvisual(newVRD);
+        VRDlist.add(newVRDvisual);
+        newVRD.addRefreshListner(newVRDvisual);
+        newVRDvisual.addRefreshListner(newVRD);
 
         // Dodanie nowego urządzenia do panelu z urządzeniami
-        viewportView.add(newVRD);
+        viewportView.add(newVRDvisual);
         viewportView.revalidate();
         viewportView.repaint();
         deviceScrollPane.revalidate();

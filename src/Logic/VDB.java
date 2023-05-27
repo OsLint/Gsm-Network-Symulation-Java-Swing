@@ -98,7 +98,7 @@ public class VDB implements VDBlink ,Runnable {
             Random random = new Random();
             int randomIndex = random.nextInt(Window.VRDlist.size());
             VRDvisual tempVisual = Window.VRDlist.get(randomIndex);
-            VRDlink tempVRD = tempVisual.getTempVRD();
+            VRDlink tempVRD = tempVisual.getVrDlink();
 
             return tempVRD.getID();
         }

@@ -1,17 +1,24 @@
 package Graphics.Visualisations;
 
+import Events.RefreshEvent;
+import Events.RefreshListner;
 import InterfaceLink.StationLink;
+import Logic.Station;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
-public class StationVisual extends JPanel {
+public class StationVisual extends JPanel implements RefreshListner {
     private JLabel idLabel;
     private JLabel processedMessageCounterLabel;
     private JLabel waitingMessageCounterLabel;
     private int messagesInDeck;
+    private StationLink stationLink;
+    private ArrayList<RefreshListner> listners = new ArrayList<>();
 
     public StationVisual(StationLink stationLink) {
+        this.stationLink = stationLink;
         this.messagesInDeck = stationLink.getWaitingMessageCounter();
         setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
         setMaximumSize(new Dimension(Integer.MAX_VALUE,200));
@@ -25,7 +32,6 @@ public class StationVisual extends JPanel {
         waitingMessageCounterLabel = new JLabel(
                 "Waiting:" + stationLink.getWaitingMessageCounter()
         );
-
 
         //Id label
         idLabel.setPreferredSize(new Dimension(150,50));
@@ -45,15 +51,24 @@ public class StationVisual extends JPanel {
         setBackground(new Color(248, 246, 244));
     }
 
+    public void addRefreshListner(RefreshListner listner) {
+        this.listners.add(listner);
+    }
+    public void removeRefreshListner(RefreshListner listner) {
+        this.listners.remove(listner);
+    }
+
+    public void fireRefresh(){
+        RefreshEvent evt = new RefreshEvent(this,(Station) stationLink);
+        for(RefreshListner listner: listners)
+            listner.refresh(evt);
+    }
 
 
     @Override
-    public String toString() {
-        return "StationVisual{" +
-                "idLabel=" + idLabel +
-                ", processedMessageCounterLabel=" + processedMessageCounterLabel +
-                ", waitingMessageCounterLabel=" + waitingMessageCounterLabel +
-                ", messagesInDeck=" + messagesInDeck +
-                '}';
+    public void refresh(RefreshEvent evt) {
+        Station station = evt.getStation();
+        processedMessageCounterLabel.setText("Processed: " + station.getProcessedMessageCounter());
+        waitingMessageCounterLabel.setText("Waiting: " + station.getWaitingMessageCounter());
     }
 }

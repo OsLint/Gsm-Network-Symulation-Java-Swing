@@ -1,28 +1,32 @@
 package Graphics.Visualisations;
 
+import Events.RefreshEvent;
+import Events.RefreshListner;
 import InterfaceLink.VRDlink;
+import Logic.Station;
 import Logic.VRD;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
-public class VRDvisual extends JPanel {
+public class VRDvisual extends JPanel implements RefreshListner {
     private JTextField idTextField;
     private JButton stopButton;
     private JLabel messageCounter;
     private JCheckBox clearTimeCheckBox;
-    private VRDlink tempVRD;
+    private VRDlink vrDlink;
+    private ArrayList<RefreshListner> listners = new ArrayList<>();
 
     public VRDvisual (VRDlink vrDlink) {
         setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
         setMaximumSize(new Dimension(Integer.MAX_VALUE,200));
         setMinimumSize(new Dimension(Integer.MAX_VALUE, 200));
 
-
         //Inicjalizacja komponentów
-        tempVRD = vrDlink;
+        this.vrDlink = vrDlink;
         idTextField = new JTextField("ID: " + vrDlink.getID());
         stopButton = new JButton("Stop");
         messageCounter = new JLabel(
@@ -30,6 +34,7 @@ public class VRDvisual extends JPanel {
                 vrDlink.getReceivedMessageCount()
         );
         clearTimeCheckBox = new JCheckBox("Reset Counter");
+
 
         //ClearTimeCheckBox
         clearTimeCheckBox.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -81,7 +86,28 @@ public class VRDvisual extends JPanel {
 
     }
 
-    public VRDlink getTempVRD() {
-        return tempVRD;
+    public VRDlink getVrDlink() {
+        return vrDlink;
+    }
+
+    public void addRefreshListner(RefreshListner listner) {
+        this.listners.add(listner);
+    }
+    public void removeRefreshListner(RefreshListner listner) {
+        this.listners.remove(listner);
+    }
+
+    public void fireRefresh(){
+        RefreshEvent evt = new RefreshEvent(this,(VRD) vrDlink);
+        for(RefreshListner listner: listners)
+            listner.refresh(evt);
+    }
+
+
+    @Override
+    public void refresh(RefreshEvent evt) {
+        VRD VRD = evt.getVrd();
+        messageCounter.setText("Message count: " + vrDlink.getReceivedMessageCount());
+
     }
 }

@@ -1,7 +1,8 @@
 package Logic;
 
+import Events.RefreshEvent;
+import Events.RefreshListner;
 import Graphics.Visualisations.LayerVisual;
-import Graphics.Visualisations.StationVisual;
 import InterfaceLink.StationLink;
 
 import java.util.ArrayList;
@@ -9,28 +10,34 @@ import java.util.Random;
 
 //2do:
 
-public class Station implements StationLink,Runnable, Comparable<Station> {
+public class Station implements StationLink,Runnable, Comparable<Station>, RefreshListner {
+
     private static int counterId;
     private int Id;
     private int processedMessageCounter;
     private int waitingMessageCounter;
-    private String title;
-    private ArrayList<Message> messagesInDeckList;
+    private StationType type;
+    private ArrayList<Message> messagesInDeckList; //Oczekujące Wiadomości
     private Message currentMessage;
     private int maxMessagesCap;
-    private Thread thread;
+    private Thread thread; //Główny wątek
+    private Thread refreshThread; //Poboczny wątek służący do odświerzania
+    private ArrayList<RefreshListner> listeners = new ArrayList<>();
 
-    public Station() {
-        title = "test";
+    public Station(StationType type) {
+        this.type = type;
         maxMessagesCap = 5;
         counterId++;
         Id=counterId;
         processedMessageCounter = 0;
         messagesInDeckList = new ArrayList<Message>();
         waitingMessageCounter = messagesInDeckList.size();
-        // Tworzenie i uruchamianie wątku
+        // Tworzenie i uruchamianie głównego wątku
         thread = new Thread(this);
         thread.start();
+        // Tworzenie i uruchamianie wątku odświerzającego
+        refreshThread = new Thread(this::refreshThreadLoop);
+        refreshThread.start();
     }
 
     @Override
@@ -49,8 +56,8 @@ public class Station implements StationLink,Runnable, Comparable<Station> {
     }
 
     @Override
-    public String getTitle() {
-        return title;
+    public StationType getType() {
+        return type;
     }
 
     @Override
@@ -100,31 +107,71 @@ public class Station implements StationLink,Runnable, Comparable<Station> {
                 "Id=" + Id +
                 ", processedMessageCounter=" + processedMessageCounter +
                 ", waitingMessageCounter=" + waitingMessageCounter +
-                ", title='" + title + '\'' +
+                ", title='" + type + '\'' +
                 ", messagesInDeckList=" + messagesInDeckList +
                 '}';
     }
 
+    public void addRefreshListener(RefreshListner listener) {
+        listeners.add(listener);
+    }
+
+    public void removeRefreshListener(RefreshListner listener) {
+        listeners.remove(listener);
+    }
+
     @Override
     public void run() {
-        Random random = new Random();
-        int sleepTime = random.nextInt(11) + 5; //Losowy Czas od 5 do 15 sekund
-        try {
-            Thread.sleep(sleepTime * 1000); // Zamiana na milisekundy
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        Station nextStation = findNextStation();
-        if(nextStation != null && currentMessage != null) {
-            for (Message message : messagesInDeckList) {
-                if (message != null) {
-                    currentMessage = message;
-                    break;
-                }
+        while(thread.isAlive()) {
+            //System.out.println("Debug: Witam jestem stacja : " + this.getId()
+            //        + " mam: " + this.getWaitingMessageCounter() + " Wiadomości:");
+            Random random = new Random();
+            int sleepTime;
+
+            if(this.getType() == StationType.BSC) {
+                //BSC
+                sleepTime = random.nextInt(11) + 5; //Losowy Czas od 5 do 15 sekund
+            }else  {
+                //BTS
+                sleepTime = 3; //3 Sekundy
             }
-            nextStation.reciveMessage(currentMessage);
-            messagesInDeckList.remove(currentMessage);
-            processedMessageCounter++;
+
+            try {
+                Thread.sleep(sleepTime * 1000); // Zamiana na milisekundy
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Station nextStation = findNextStation();
+            if(nextStation != null && currentMessage != null) {
+                for (Message message : messagesInDeckList) {
+                    if (message != null) {
+                        currentMessage = message;
+                        break;
+                    }
+                }
+                nextStation.reciveMessage(currentMessage);
+                messagesInDeckList.remove(currentMessage);
+                processedMessageCounter++;
+            }
+
+        }
+
+    }
+    private void refreshThreadLoop() {
+        while (refreshThread.isAlive()) {
+            RefreshEvent refreshEvent = new RefreshEvent(this, this);
+            fireRefresh(refreshEvent);
         }
     }
+    private void fireRefresh(RefreshEvent event) {
+        for (RefreshListner listener : listeners) {
+            listener.refresh(event);
+        }
+    }
+    @Override
+    public void refresh(RefreshEvent evt) {
+        //nie trzeba implementować
+    }
+
+    
 }

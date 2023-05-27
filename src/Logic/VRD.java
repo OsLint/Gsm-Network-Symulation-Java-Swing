@@ -1,16 +1,22 @@
 package Logic;
 
+import Events.RefreshEvent;
+import Events.RefreshListner;
 import InterfaceLink.VRDlink;
 
 import java.io.IOException;
+import java.time.Duration;
+import java.util.ArrayList;
 
-public class VRD implements VRDlink {
+public class VRD implements VRDlink, Runnable, RefreshListner {
     //Pola Prywatne
     private static int countId;
     private int Id;
     private int receivedMessageCounter;
     private boolean isWorking;
-
+    private Thread thread; //Główny wątek (odświerzający Visual)
+    private Thread refreshThread; //Wątek odświerzania countera
+    private ArrayList<RefreshListner> listners = new ArrayList<>();
 
     //Konstruktor
     public VRD () {
@@ -19,8 +25,12 @@ public class VRD implements VRDlink {
         this.receivedMessageCounter = 0;
         this.Id = countId;
 
-        ///
-        //receivedMessageCounter = 10000;
+        // Tworzenie i uruchamianie głównego wątku
+        thread = new Thread(this);
+        thread.start();
+
+        //Test Debug
+        this.receivedMessageCounter = 10000;
 
     }
 
@@ -41,14 +51,10 @@ public class VRD implements VRDlink {
     public boolean getResetMessageCount() {
         return false;
     }
-
-
     @Override
     public int getReceivedMessageCount() {
         return receivedMessageCounter;
     }
-
-
     //settery
     @Override
     public void setIsWorking(boolean isWorking) {
@@ -56,30 +62,59 @@ public class VRD implements VRDlink {
     }
 
     //Nadpisane metody z interfejsu
+
     @Override
-    public void countMessage() {
+    public void reciveMessage(String message) {
         receivedMessageCounter++;
     }
 
     @Override
-    public void reciveMessage(String message) {
-
-    }
-
-    @Override
-    public void processMessages() {
-
-    }
-
-    @Override
     public void startResetMessageCount() {
-
-         // resetThread.start();
-
+        // Tworzenie i uruchamianie wątku odświerzającego
+        refreshThread = new Thread(this::messegageCounterRefreshLoop);
+        refreshThread.start();
     }
 
     @Override
     public void stopResetMessageCount() {
-        //resetThread.interrupt();
+        refreshThread.interrupt();
+    }
+
+    private void messegageCounterRefreshLoop() {
+        while (refreshThread.isAlive()) {
+            try {
+                Thread.sleep( 10000); // 10 sekund
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            this.receivedMessageCounter = 0;
+        }
+    }
+
+    @Override
+    public void run() {
+            while (thread.isAlive()) {
+                System.out.println("Jestem: " + this.getID() + "Mam: " + getReceivedMessageCount());
+                RefreshEvent refreshEvent = new RefreshEvent(this, this);
+                fireRefresh(refreshEvent);
+            }
+    }
+
+    private void fireRefresh(RefreshEvent refreshEvent) {
+        for (RefreshListner listener : listners) {
+            listener.refresh(refreshEvent);
+        }
+    }
+
+    public void addRefreshListner(RefreshListner listner) {
+        this.listners.add(listner);
+    }
+    public void removeRefreshListner(RefreshListner listner) {
+        this.listners.remove(listner);
+    }
+
+    @Override
+    public void refresh(RefreshEvent evt) {
+        //nie trzeba implementować
     }
 }

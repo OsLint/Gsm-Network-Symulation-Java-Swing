@@ -1,6 +1,8 @@
 package Graphics.Visualisations;
 
 import Logic.Station;
+import Logic.StationType;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -8,7 +10,7 @@ import java.util.ArrayList;
 public class LayerVisual extends JPanel {
     private JScrollPane deviceScrollPane;
     public ArrayList<Station> stationList;
-    //private StationVisual baseStation;
+    private StationType type;
     private JLabel titleLabel;
     private String title;
     private JPanel layerViewPort;
@@ -21,17 +23,22 @@ public class LayerVisual extends JPanel {
                 Toolkit.getDefaultToolkit().getScreenSize().height
         ));
         setLayout(new BorderLayout());
+        this.setType();
 
 
         //Inicjalizacja komponentów
         stationList = new ArrayList<>();
-        Station baseStation = new Station();
+        Station baseStation = new Station(type);
         StationVisual baseStationVisual = new StationVisual(baseStation);
+
         stationList.add(baseStation);
         titleLabel = new JLabel(title);
         deviceScrollPane = new JScrollPane();
         layerViewPort = new JPanel();
 
+        //Dodaj RefreshListner
+        baseStationVisual.addRefreshListner(baseStation);
+        baseStation.addRefreshListener(baseStationVisual);
 
         //layerViewPort
         layerViewPort.setLayout(new BoxLayout(layerViewPort,BoxLayout.Y_AXIS));
@@ -60,10 +67,20 @@ public class LayerVisual extends JPanel {
         return title;
     }
 
+    public void setType() {
+        if(this.getTitle().toUpperCase().equals("BSC")) {
+            this.type = StationType.BSC;
+        }else {
+            this.type = StationType.BTS;
+        }
+    }
+
     void addStation(){
-        Station sv = new Station();
+        Station sv = new Station(type);
         stationList.add(sv);
         StationVisual stationVisual = new StationVisual(sv);
+        sv.addRefreshListener(stationVisual);
+        stationVisual.addRefreshListner(sv);
         layerViewPort.add(stationVisual);
     }
 

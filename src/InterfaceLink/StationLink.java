@@ -3,12 +3,13 @@ package InterfaceLink;
 import Graphics.Visualisations.LayerVisual;
 import Logic.Message;
 import Logic.Station;
+import Logic.StationType;
 
 public interface StationLink {
     int getId();
     int getProcessedMessageCounter();
     int getWaitingMessageCounter();
-    String getTitle();
+    StationType getType();
     Station findNextStation();
     LayerVisual findNextLayer();
     void reciveMessage(Message message);

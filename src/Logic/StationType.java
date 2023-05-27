@@ -1,5 +1,5 @@
 package Logic;
 
-public enum StationType {
-    BTSin,BTSout,BSC
+public enum StationType{
+   BTS,BSC
 }

@@ -50,6 +50,7 @@ public class LayerPanel extends PanelTemplate {
         layers.add(new LayerVisual("BSC"));
         layers.add(new LayerVisual("BTS"));
 
+
         updateViewportView();
     }
 
