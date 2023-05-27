@@ -4,7 +4,6 @@ import Graphics.Visualisations.LayerVisual;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import static Graphics.Window.layers;
 import static Graphics.Window.showInfoDialog;
@@ -37,12 +36,7 @@ public class LayerPanel extends PanelTemplate {
         titleTextField.setHorizontalAlignment(SwingConstants.CENTER);
         add(titleTextField, BorderLayout.NORTH);
 
-        deleteButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                handleDeleteButtonAction(e);
-            }
-        });
+        deleteButton.addActionListener(this::handleDeleteButtonAction);
 
 
         add(buttonPanel, BorderLayout.SOUTH);

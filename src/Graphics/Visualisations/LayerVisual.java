@@ -1,5 +1,7 @@
 package Graphics.Visualisations;
 
+import Events.RefreshEvent;
+import Events.RefreshListner;
 import Logic.Station;
 import Logic.StationType;
 
@@ -38,6 +40,7 @@ public class LayerVisual extends JPanel {
 
         //Dodaj RefreshListner
         baseStation.addRefreshListener(baseStationVisual);
+       // baseStation.addRefreshListener(this);
 
         //layerViewPort
         layerViewPort.setLayout(new BoxLayout(layerViewPort,BoxLayout.Y_AXIS));
@@ -72,14 +75,6 @@ public class LayerVisual extends JPanel {
         }else {
             this.type = StationType.BTS;
         }
-    }
-
-    void addStation(){
-        Station sv = new Station(type);
-        stationList.add(sv);
-        StationVisual stationVisual = new StationVisual(sv);
-        sv.addRefreshListener(stationVisual);
-        layerViewPort.add(stationVisual);
     }
 
     public void turnOff(){

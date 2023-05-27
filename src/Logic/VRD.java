@@ -92,7 +92,7 @@ public class VRD implements VRDlink, Runnable {
     @Override
     public void run() {
             while (this.isWorking) {
-                System.out.println("Debug: Jestem: " + this.getID() + "Mam: " + getReceivedMessageCount());
+                //System.out.println("Debug: Jestem: " + this.getID() + "Mam: " + getReceivedMessageCount());
                 RefreshEvent refreshEvent = new RefreshEvent(this, this);
                 fireRefresh(refreshEvent);
             }

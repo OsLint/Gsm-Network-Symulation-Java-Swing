@@ -32,11 +32,15 @@ public class Station implements StationLink,Runnable, Comparable<Station> {
 
 
     public Station(StationType type) {
+
+
+
         this.working = true;
         this.type = type;
         maxMessagesCap = 5;
         counterId++;
         Id=counterId;
+        System.out.println("DEBUG: UTWORZONO STACJE: " + this.getId());
         processedMessageCounter = 0;
         messagesInDeckList = new ArrayList<Message>();
         waitingMessageCounter = messagesInDeckList.size();
@@ -118,10 +122,18 @@ public class Station implements StationLink,Runnable, Comparable<Station> {
     @Override
     public void createNewStation(Message message) {
         //2DO
-        LayerVisual CurrentLayer = Window.layers.get(0);
-
-        Station newStaion = new Station(type);
-        newStaion.reciveMessage(message);
+        LayerVisual CurrentLayer = null;
+        for (int i = 0; i < Window.layers.size(); i++) {
+            if (Window.layers.get(i).containsStation(this)) {
+               CurrentLayer = Window.layers.get(i);
+               break;
+            }
+        }
+        if(CurrentLayer != null) {
+            Station newStaion = new Station(type);
+            newStaion.reciveMessage(message);
+            CurrentLayer.stationList.add(newStaion);
+        }
     }
 
     @Override
@@ -177,12 +189,12 @@ public class Station implements StationLink,Runnable, Comparable<Station> {
                 nextStation.reciveMessage(currentMessage);
                 messagesInDeckList.remove(currentMessage);
                 processedMessageCounter++;
-            }else if (nextStation == null) {
-               // try {
-                   // sendMessageToVRD(currentMessage);
-               // } catch (NumberNotFoundExeption e) {
-                  //  Window.showInfoDialog("VRD Not Found","Nie odnaleziono obektu VRD",null);
-               // }
+            }else if (nextStation == null && currentMessage != null) {
+                try {
+                   sendMessageToVRD(currentMessage);
+                } catch (NumberNotFoundExeption e) {
+                    Window.showInfoDialog("VRD Not Found","Nie odnaleziono obektu VRD",null);
+                }
             }
 
         }
@@ -206,7 +218,7 @@ public class Station implements StationLink,Runnable, Comparable<Station> {
     public void removeRefreshListener(RefreshListner listener) {
         listeners.remove(listener);
     }
-    public void sendMessageToVRD(Message message) /*throws NumberNotFoundExeption */{
+    public void sendMessageToVRD(Message message) throws NumberNotFoundExeption {
         int adress = message.getAdress();
         boolean messageSended = false;
         for (int i = 0; i < Window.VRDlist.size(); i++) {
@@ -217,7 +229,7 @@ public class Station implements StationLink,Runnable, Comparable<Station> {
             }
         }
         if(!messageSended) {
-            //throw new NumberNotFoundExeption(adress);
+            throw new NumberNotFoundExeption(adress);
         }
     }
 

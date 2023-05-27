@@ -90,7 +90,7 @@ public class VBD implements VBDlink ,Runnable {
                         "VDB: " + this.getID() + " oczekuje na dostępny VRD.");
             }
         }else {
-            System.out.println(Window.VRDlist.size());
+            //Debbug: System.out.println(Window.VRDlist.size());
             Random random = new Random();
             int randomIndex = random.nextInt(Window.VRDlist.size());
             VRD tempVRD = Window.VRDlist.get(randomIndex);
@@ -133,6 +133,7 @@ public class VBD implements VBDlink ,Runnable {
             }else {
                 int VRDnumber = randomVRD();
                 if(VRDnumber != 0) {
+
                     message.setAdress(VRDnumber);
                     sendMessage(this.getMessage());
                 }else {
