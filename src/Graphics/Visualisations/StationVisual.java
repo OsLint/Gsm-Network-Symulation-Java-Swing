@@ -51,20 +51,6 @@ public class StationVisual extends JPanel implements RefreshListner {
         setBackground(new Color(248, 246, 244));
     }
 
-    public void addRefreshListner(RefreshListner listner) {
-        this.listners.add(listner);
-    }
-    public void removeRefreshListner(RefreshListner listner) {
-        this.listners.remove(listner);
-    }
-
-    public void fireRefresh(){
-        RefreshEvent evt = new RefreshEvent(this,(Station) stationLink);
-        for(RefreshListner listner: listners)
-            listner.refresh(evt);
-    }
-
-
     @Override
     public void refresh(RefreshEvent evt) {
         Station station = evt.getStation();

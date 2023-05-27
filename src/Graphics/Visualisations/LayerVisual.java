@@ -14,7 +14,7 @@ public class LayerVisual extends JPanel {
     private JLabel titleLabel;
     private String title;
     private JPanel layerViewPort;
-    private boolean end;
+
     public LayerVisual(String title) {
 
         this.title = title;
@@ -37,7 +37,6 @@ public class LayerVisual extends JPanel {
         layerViewPort = new JPanel();
 
         //Dodaj RefreshListner
-        baseStationVisual.addRefreshListner(baseStation);
         baseStation.addRefreshListener(baseStationVisual);
 
         //layerViewPort
@@ -80,8 +79,21 @@ public class LayerVisual extends JPanel {
         stationList.add(sv);
         StationVisual stationVisual = new StationVisual(sv);
         sv.addRefreshListener(stationVisual);
-        stationVisual.addRefreshListner(sv);
         layerViewPort.add(stationVisual);
+    }
+
+    public void turnOff(){
+        for (int i = 0; i < stationList.size(); i++) {
+            stationList.get(i).setIsWorking(false);
+        }
+    }
+    public boolean containsStation(Station station){
+        for (int i = 0; i < stationList.size(); i++) {
+            if(station.getId() == stationList.get(i).getId()){
+                return true;
+            }
+        }
+        return false;
     }
 
 }

@@ -7,7 +7,7 @@
  */
 
 import Graphics.Visualisations.LayerVisual;
-import Graphics.Visualisations.VDBvisual;
+import Graphics.Visualisations.VBDvisual;
 import Graphics.Visualisations.VRDvisual;
 import Graphics.Window;
 import javax.swing.*;

@@ -14,7 +14,9 @@ public interface StationLink {
     LayerVisual findNextLayer();
     void reciveMessage(Message message);
     Message getCurrentMessage();
-
+    boolean getIsWorking();
+    void setIsWorking(boolean bol);
     int getMaxMessageCap();
+    void createNewStation(Message message);
 
 }

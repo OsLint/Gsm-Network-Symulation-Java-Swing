@@ -1,7 +1,9 @@
 package InterfaceLink;
 
+import Logic.Message;
+
 public interface VRDlink {
-    void reciveMessage(String message);
+    void reciveMessage(Message message);
     void startResetMessageCount();
     void stopResetMessageCount();
     int getID();

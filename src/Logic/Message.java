@@ -1,14 +1,14 @@
 package Logic;
 
 public class Message {
-    private String adress;
+    private int adress;
     private String content;
 
     public Message(String content) {
         this.content = content;
     }
 
-    public void setAdress(String adress) {
+    public void setAdress(int adress) {
         this.adress = adress;
     }
 
@@ -16,7 +16,7 @@ public class Message {
         this.content = content;
     }
 
-    public String getAdress() {
+    public int getAdress() {
         return adress;
     }
 
@@ -27,6 +27,5 @@ public class Message {
     @Override
     public String toString() {
         return  content;
-
     }
 }

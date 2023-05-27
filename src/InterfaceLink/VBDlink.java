@@ -4,9 +4,9 @@ import Graphics.Visualisations.StationVisual;
 import Logic.Message;
 import Logic.Station;
 
-public interface VDBlink {
+public interface VBDlink {
     int randomVRD();
-    void sendMessage(int adress, Message message);
+    void sendMessage(Message message);
     Station findMostEmptyStation();
 
     void setMessage(Message message);

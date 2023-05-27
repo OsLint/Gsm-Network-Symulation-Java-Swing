@@ -1,12 +1,14 @@
 package Graphics;
 
 import Graphics.Panels.LayerPanel;
-import Graphics.Panels.VDBpanel;
+import Graphics.Panels.VBDpanel;
 import Graphics.Panels.VRDpanel;
 import Graphics.Visualisations.LayerVisual;
-import Graphics.Visualisations.VDBvisual;
+import Graphics.Visualisations.VBDvisual;
 import Graphics.Visualisations.VRDvisual;
 import Logic.FileHandler;
+import Logic.VBD;
+import Logic.VRD;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,8 +18,8 @@ import java.util.ArrayList;
 
 public class Window extends JFrame {
 
-    public static ArrayList<VDBvisual> VDBlist = new ArrayList<>();
-    public static ArrayList<VRDvisual> VRDlist = new ArrayList<>();
+    public static ArrayList<VBD> VBDlist = new ArrayList<>();
+    public static ArrayList<VRD> VRDlist = new ArrayList<>();
     public static ArrayList<LayerVisual> layers = new ArrayList<>();
 
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -42,13 +44,13 @@ public class Window extends JFrame {
 
 
 
-    VDBpanel VDBpanel = new VDBpanel("VDB Panel");
+    VBDpanel VBDpanel = new VBDpanel("VBD Panel");
     LayerPanel layerPanel = new LayerPanel("Layer Panel");
     VRDpanel VRDpanel = new VRDpanel("VRD Panel");
 
 
 
-    this.getContentPane().add(VDBpanel,BorderLayout.WEST);
+    this.getContentPane().add(VBDpanel,BorderLayout.WEST);
     this.getContentPane().add(layerPanel,BorderLayout.CENTER);
     this.getContentPane().add(VRDpanel,BorderLayout.EAST);
     }

@@ -12,6 +12,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import static Graphics.Window.VRDlist;
+
 public class VRDvisual extends JPanel implements RefreshListner {
     private JTextField idTextField;
     private JButton stopButton;
@@ -61,6 +63,7 @@ public class VRDvisual extends JPanel implements RefreshListner {
         idTextField.setMaximumSize(new Dimension(Integer.MAX_VALUE,50));
         idTextField.setFont(new Font("Arial",Font.BOLD,20));
         idTextField.setAlignmentX(Component.LEFT_ALIGNMENT);
+        idTextField.setEditable(false);
 
         //Stop button
         stopButton.addActionListener(new ActionListener() {
@@ -89,20 +92,6 @@ public class VRDvisual extends JPanel implements RefreshListner {
     public VRDlink getVrDlink() {
         return vrDlink;
     }
-
-    public void addRefreshListner(RefreshListner listner) {
-        this.listners.add(listner);
-    }
-    public void removeRefreshListner(RefreshListner listner) {
-        this.listners.remove(listner);
-    }
-
-    public void fireRefresh(){
-        RefreshEvent evt = new RefreshEvent(this,(VRD) vrDlink);
-        for(RefreshListner listner: listners)
-            listner.refresh(evt);
-    }
-
 
     @Override
     public void refresh(RefreshEvent evt) {

@@ -1,19 +1,24 @@
 package Graphics.Visualisations;
 
-import InterfaceLink.VDBlink;
+import Events.RefreshEvent;
+import Events.RefreshListner;
+import InterfaceLink.VBDlink;
+import Logic.VBD;
+import Logic.VRD;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
-public class VDBvisual extends JPanel {
+public class VBDvisual extends JPanel implements RefreshListner {
     private JLabel messageLabel;
     private JSlider frequencySlider;
     private JButton stopButton;
     private JTextField idTextField;
     private JComboBox statusComboBox;
-    public VDBvisual (VDBlink vdBlink) {
+    public VBDvisual (VBDlink vbDlink) {
 
         setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
         setMaximumSize(new Dimension(Integer.MAX_VALUE,200));
@@ -21,10 +26,10 @@ public class VDBvisual extends JPanel {
 
 
         //Inicjalizacja komponentów
-        messageLabel = new JLabel("Message: " + vdBlink.getMessage());
-        frequencySlider = new JSlider(JSlider.HORIZONTAL,1,5,vdBlink.getFrequency());
+        messageLabel = new JLabel("Message: " + vbDlink.getMessage());
+        frequencySlider = new JSlider(JSlider.HORIZONTAL,1,5,vbDlink.getFrequency());
         stopButton = new JButton("Stop");
-        idTextField = new JTextField("ID: " + vdBlink.getID());
+        idTextField = new JTextField("ID: " + vbDlink.getID());
         statusComboBox = new JComboBox(new String[] {"ACTIVE", "WAITING"});
 
         //Id text field
@@ -33,6 +38,7 @@ public class VDBvisual extends JPanel {
         idTextField.setMaximumSize(new Dimension(Integer.MAX_VALUE,50));
         idTextField.setBackground(new Color(227, 244, 244));
         idTextField.setFont(new Font("Arial",Font.BOLD,20));
+        idTextField.setEditable(false);
 
         //Frequency slider
         frequencySlider.setMajorTickSpacing(1);
@@ -40,14 +46,14 @@ public class VDBvisual extends JPanel {
         frequencySlider.setPaintLabels(true);
         frequencySlider.setSnapToTicks(true);
         frequencySlider.addChangeListener(e -> {
-            vdBlink.setFrequency(frequencySlider.getValue());
+            vbDlink.setFrequency(frequencySlider.getValue());
         });
 
         //Stop button
         stopButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                vdBlink.setIsWorking(false);
+                vbDlink.setIsWorking(false);
                 setVisible(false);
             }
         });
@@ -59,15 +65,13 @@ public class VDBvisual extends JPanel {
                 String selectedStatus = (String) statusComboBox.getSelectedItem();
                 if (selectedStatus != null) {
                     if (selectedStatus.equals("ACTIVE")){
-                        vdBlink.setIsWaiting(false);
-                        vdBlink.setIsWorking(true);
-                        vdBlink.run();
-                        //System.out.println("Debug: " + vdBlink.getID() + " is Active");
+                        vbDlink.setIsWaiting(false);
+                        vbDlink.setIsWorking(true);
+                        System.out.println(vbDlink);
                     } else if (selectedStatus.equals("WAITING")) {
-                        vdBlink.setIsWaiting(true);
-                        vdBlink.setIsWorking(false);
+                        vbDlink.setIsWaiting(true);
+                        //vbDlink.setIsWorking(false);
 
-                        // System.out.println("Debug: "+ vdBlink.getID() + " is  Waiting");
                     }
                 }
 
@@ -84,5 +88,10 @@ public class VDBvisual extends JPanel {
         // setPreferredSize(new Dimension(250, 150));
         setBackground(new Color(248, 246, 244));
 
+    }
+    @Override
+    public void refresh(RefreshEvent evt) {
+        VBD vbd= evt.getVbd();
+        statusComboBox.setSelectedItem("WAITING");
     }
 }

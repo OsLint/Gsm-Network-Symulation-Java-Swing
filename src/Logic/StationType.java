@@ -1,5 +1,8 @@
 package Logic;
 
 public enum StationType{
-   BTS,BSC
+   BTS("base transceiver station"),BSC("Base Station Controller");
+
+   StationType(String str) {
+   }
 }

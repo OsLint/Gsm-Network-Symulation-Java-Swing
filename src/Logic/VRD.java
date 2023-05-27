@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.time.Duration;
 import java.util.ArrayList;
 
-public class VRD implements VRDlink, Runnable, RefreshListner {
+public class VRD implements VRDlink, Runnable {
     //Pola Prywatne
     private static int countId;
     private int Id;
@@ -29,8 +29,6 @@ public class VRD implements VRDlink, Runnable, RefreshListner {
         thread = new Thread(this);
         thread.start();
 
-        //Test Debug
-        this.receivedMessageCounter = 10000;
 
     }
 
@@ -64,7 +62,7 @@ public class VRD implements VRDlink, Runnable, RefreshListner {
     //Nadpisane metody z interfejsu
 
     @Override
-    public void reciveMessage(String message) {
+    public void reciveMessage(Message message) {
         receivedMessageCounter++;
     }
 
@@ -93,8 +91,8 @@ public class VRD implements VRDlink, Runnable, RefreshListner {
 
     @Override
     public void run() {
-            while (thread.isAlive()) {
-                System.out.println("Jestem: " + this.getID() + "Mam: " + getReceivedMessageCount());
+            while (this.isWorking) {
+                System.out.println("Debug: Jestem: " + this.getID() + "Mam: " + getReceivedMessageCount());
                 RefreshEvent refreshEvent = new RefreshEvent(this, this);
                 fireRefresh(refreshEvent);
             }
@@ -113,8 +111,5 @@ public class VRD implements VRDlink, Runnable, RefreshListner {
         this.listners.remove(listner);
     }
 
-    @Override
-    public void refresh(RefreshEvent evt) {
-        //nie trzeba implementować
-    }
+
 }

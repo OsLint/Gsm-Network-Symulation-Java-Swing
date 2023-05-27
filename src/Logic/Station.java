@@ -2,15 +2,18 @@ package Logic;
 
 import Events.RefreshEvent;
 import Events.RefreshListner;
+import Exeptions.NumberNotFoundExeption;
 import Graphics.Visualisations.LayerVisual;
+import Graphics.Window;
 import InterfaceLink.StationLink;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 //2do:
 
-public class Station implements StationLink,Runnable, Comparable<Station>, RefreshListner {
+public class Station implements StationLink,Runnable, Comparable<Station> {
 
     private static int counterId;
     private int Id;
@@ -23,8 +26,13 @@ public class Station implements StationLink,Runnable, Comparable<Station>, Refre
     private Thread thread; //Główny wątek
     private Thread refreshThread; //Poboczny wątek służący do odświerzania
     private ArrayList<RefreshListner> listeners = new ArrayList<>();
+    private boolean working;
+
+
+
 
     public Station(StationType type) {
+        this.working = true;
         this.type = type;
         maxMessagesCap = 5;
         counterId++;
@@ -45,6 +53,7 @@ public class Station implements StationLink,Runnable, Comparable<Station>, Refre
         return Id;
     }
 
+
     @Override
     public int getProcessedMessageCounter() {
         return processedMessageCounter;
@@ -64,38 +73,56 @@ public class Station implements StationLink,Runnable, Comparable<Station>, Refre
     public Message getCurrentMessage() {
         return currentMessage;
     }
-
+    @Override
+    public boolean getIsWorking() {
+        return working;
+    }
+    @Override
+    public void setIsWorking(boolean bol) {
+        System.out.println("Debug: Stacja: " + this + " wyłączono ");
+        this.working = bol;
+    }
     @Override
     public int getMaxMessageCap() {
         return maxMessagesCap;
     }
-
     @Override
-    public Station findNextStation() {
-        //2DO;
+    public LayerVisual findNextLayer() {
+        for (int i = 0; i < Window.layers.size(); i++) {
+            if(Window.layers.get(i).containsStation(this)){
+                if(i + 1 < Window.layers.size()) {
+                    return Window.layers.get(i+1);
+                }
+            }
+        }
         return null;
     }
     @Override
-    public LayerVisual findNextLayer() {
-        //2DO
-        return null;
+    public Station findNextStation() {
+        LayerVisual nextLayer = findNextLayer();
+        if(nextLayer != null){
+            return Collections.min(nextLayer.stationList);
+        }else {
+            return null;
+        }
     }
     @Override
     public void reciveMessage(Message message) {
         if(messagesInDeckList.size() < 5) {
             messagesInDeckList.add(message);
             waitingMessageCounter = messagesInDeckList.size();
-        if(messagesInDeckList.size() == 5) {
-            //createNewStation();
-        }
         }else {
-            //2DO:
-            //creteNewStation();
-            //Station newStation = new Station();
-            //newStation.reciveMessage(message);
+            createNewStation(message);
         }
     }
+    @Override
+    public void createNewStation(Message message) {
+        //2DO
+        LayerVisual CurrentLayer = Window.layers.get(0);
 
+        Station newStaion = new Station(type);
+        newStaion.reciveMessage(message);
+    }
 
     @Override
     public int compareTo(Station other) {
@@ -107,24 +134,15 @@ public class Station implements StationLink,Runnable, Comparable<Station>, Refre
                 "Id=" + Id +
                 ", processedMessageCounter=" + processedMessageCounter +
                 ", waitingMessageCounter=" + waitingMessageCounter +
-                ", title='" + type + '\'' +
+                ", type='" + type.toString() + '\'' +
                 ", messagesInDeckList=" + messagesInDeckList +
                 '}';
     }
 
-    public void addRefreshListener(RefreshListner listener) {
-        listeners.add(listener);
-    }
-
-    public void removeRefreshListener(RefreshListner listener) {
-        listeners.remove(listener);
-    }
 
     @Override
     public void run() {
-        while(thread.isAlive()) {
-            //System.out.println("Debug: Witam jestem stacja : " + this.getId()
-            //        + " mam: " + this.getWaitingMessageCounter() + " Wiadomości:");
+        while(this.working) {
             Random random = new Random();
             int sleepTime;
 
@@ -141,6 +159,13 @@ public class Station implements StationLink,Runnable, Comparable<Station>, Refre
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            currentMessage = null;
+            for (int i = 0; i < messagesInDeckList.size(); i++) {
+                if(messagesInDeckList.get(i) != null) {
+                    currentMessage = messagesInDeckList.get(i);
+                    break;
+                }
+            }
             Station nextStation = findNextStation();
             if(nextStation != null && currentMessage != null) {
                 for (Message message : messagesInDeckList) {
@@ -152,6 +177,12 @@ public class Station implements StationLink,Runnable, Comparable<Station>, Refre
                 nextStation.reciveMessage(currentMessage);
                 messagesInDeckList.remove(currentMessage);
                 processedMessageCounter++;
+            }else if (nextStation == null) {
+               // try {
+                   // sendMessageToVRD(currentMessage);
+               // } catch (NumberNotFoundExeption e) {
+                  //  Window.showInfoDialog("VRD Not Found","Nie odnaleziono obektu VRD",null);
+               // }
             }
 
         }
@@ -168,10 +199,27 @@ public class Station implements StationLink,Runnable, Comparable<Station>, Refre
             listener.refresh(event);
         }
     }
-    @Override
-    public void refresh(RefreshEvent evt) {
-        //nie trzeba implementować
+    public void addRefreshListener(RefreshListner listener) {
+        listeners.add(listener);
     }
 
-    
+    public void removeRefreshListener(RefreshListner listener) {
+        listeners.remove(listener);
+    }
+    public void sendMessageToVRD(Message message) /*throws NumberNotFoundExeption */{
+        int adress = message.getAdress();
+        boolean messageSended = false;
+        for (int i = 0; i < Window.VRDlist.size(); i++) {
+            if((Window.VRDlist.get(i).getID()) == adress) {
+                Window.VRDlist.get(i).reciveMessage(message);
+                messageSended = true;
+                break;
+            }
+        }
+        if(!messageSended) {
+            //throw new NumberNotFoundExeption(adress);
+        }
+    }
+
+
 }

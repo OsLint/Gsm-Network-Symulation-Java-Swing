@@ -1,7 +1,7 @@
 package Events;
 
 import Logic.Station;
-import Logic.VDB;
+import Logic.VBD;
 import Logic.VRD;
 
 import java.util.EventObject;
@@ -9,7 +9,7 @@ import java.util.EventObject;
 public class RefreshEvent extends EventObject {
     private Station station;
     private VRD vrd;
-    private VDB vdb;
+    private VBD vbd;
     public RefreshEvent(Object source, Station station) {
         super(source);
         this.station = station;
@@ -20,9 +20,9 @@ public class RefreshEvent extends EventObject {
         this.vrd = vrd;
     }
 
-    public RefreshEvent(Object source, VDB vdb) {
+    public RefreshEvent(Object source, VBD vbd) {
         super(source);
-        this.vdb = vdb;
+        this.vbd = vbd;
     }
 
     public Station getStation() {
@@ -33,7 +33,7 @@ public class RefreshEvent extends EventObject {
         return vrd;
     }
 
-    public VDB getVdb() {
-        return vdb;
+    public VBD getVbd() {
+        return vbd;
     }
 }

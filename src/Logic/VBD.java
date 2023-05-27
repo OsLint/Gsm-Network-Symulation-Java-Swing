@@ -1,16 +1,18 @@
 package Logic;
 
+import Events.RefreshEvent;
+import Events.RefreshListner;
 import Exeptions.NumberNotFoundExeption;
 import Graphics.Visualisations.LayerVisual;
 import Graphics.Visualisations.VRDvisual;
 import Graphics.Window;
-import InterfaceLink.VDBlink;
+import InterfaceLink.VBDlink;
 import InterfaceLink.VRDlink;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
-public class VDB implements VDBlink ,Runnable {
+public class VBD implements VBDlink ,Runnable {
 
     //Pola prywatne
     private static int countId;
@@ -20,9 +22,10 @@ public class VDB implements VDBlink ,Runnable {
     private boolean isWaiting;
     private int Id;
     private Thread thread;
+    private ArrayList<RefreshListner> listners = new ArrayList<>();
 
     //Konstruktor
-    public VDB(Message message) {
+    public VBD(Message message) {
         countId++;
         this.message = message;
         this.frequency = 1;
@@ -79,16 +82,9 @@ public class VDB implements VDBlink ,Runnable {
     public int randomVRD() {
         if (Window.VRDlist == null || Window.VRDlist.isEmpty()) {
             try {
-                throw new NumberNotFoundExeption(null);
+                throw new NumberNotFoundExeption(0);
             } catch (NumberNotFoundExeption nnfe) {
                 //2 do posprzątaj i zastanów się czy chcesz wyświetlać komunikat
-
-
-               /* SwingUtilities.invokeLater(() -> {
-                    Window.showInfoDialog(nnfe.getName(), "Nie istnieje dostępne " +
-                            "urządzenie VRD. \n " +
-                            "VDB: " + this.getID() + "oczekuje na dostępny VRD.", null);
-                });*/
                 System.out.println("Debug: " + "Nie istnieje dostępne " +
                         "urządzenie VRD. \n " +
                         "VDB: " + this.getID() + " oczekuje na dostępny VRD.");
@@ -97,8 +93,7 @@ public class VDB implements VDBlink ,Runnable {
             System.out.println(Window.VRDlist.size());
             Random random = new Random();
             int randomIndex = random.nextInt(Window.VRDlist.size());
-            VRDvisual tempVisual = Window.VRDlist.get(randomIndex);
-            VRDlink tempVRD = tempVisual.getVrDlink();
+            VRD tempVRD = Window.VRDlist.get(randomIndex);
 
             return tempVRD.getID();
         }
@@ -106,13 +101,11 @@ public class VDB implements VDBlink ,Runnable {
     }
 
     @Override
-    public void sendMessage(int adress, Message message) {
+    public void sendMessage( Message message) {
         //2DO
         Station nextStation = findMostEmptyStation();
         nextStation.reciveMessage(message);
 
-        System.out.println("Debug Wysłano wiadomość do: " + adress + "Stacja: " +
-                nextStation.getId());
     }
 
     @Override
@@ -127,8 +120,6 @@ public class VDB implements VDBlink ,Runnable {
         }
         return mostEmptyStation;
     }
-
-
     //Medota odpowiedzialna za wątek
     @Override
     public void run() {
@@ -136,26 +127,34 @@ public class VDB implements VDBlink ,Runnable {
             if(isWaiting){
                 try {
                     Thread.sleep(100);
-                    //System.out.println("Debug VDB: " + this.getID() + "Oczekuje");
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }else {
                 int VRDnumber = randomVRD();
                 if(VRDnumber != 0) {
-                    sendMessage(VRDnumber, this.getMessage());
+                    message.setAdress(VRDnumber);
+                    sendMessage(this.getMessage());
+                }else {
+                    fireRefresh(new RefreshEvent(this,this));
                 }
             }
             try {
                 Thread.sleep(1000 / frequency);
-                //System.out.println("Debug Wiadomość wysyłana co: " + (1000/frequency) + " milisekund.");
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
     }
-
-
-
-
+    private void fireRefresh(RefreshEvent refreshEvent) {
+        for (RefreshListner listener : listners) {
+            listener.refresh(refreshEvent);
+        }
+    }
+    public void addRefreshListner(RefreshListner listner) {
+        this.listners.add(listner);
+    }
+    public void removeRefreshListner(RefreshListner listner) {
+        this.listners.remove(listner);
+    }
 }

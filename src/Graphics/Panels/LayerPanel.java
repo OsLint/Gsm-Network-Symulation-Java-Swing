@@ -94,6 +94,7 @@ public class LayerPanel extends PanelTemplate {
                 if (bscCount > 1) {
                     for (int i = layers.size() - 1; i >= 0; i--) {
                         if (layers.get(i).getTitle().equals("BSC")) {
+                            turrnOFFlayer(layers.get(i));
                             layers.remove(i);
                             break;
                         }
@@ -102,11 +103,17 @@ public class LayerPanel extends PanelTemplate {
                     showInfoDialog("Error","Osiągnięta minimalną ilość warstw...",null);
                 }
             } else {
+                turrnOFFlayer(layers.get(layers.size() - 1));
                layers.remove(layers.size() - 1);
+
             }
 
             updateViewportView();
         }
+    }
+
+    void turrnOFFlayer (LayerVisual layerVisual) {
+        layerVisual.turnOff();
     }
 
 
