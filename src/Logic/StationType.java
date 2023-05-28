@@ -1,8 +1,9 @@
 package Logic;
 
-public enum StationType{
-   BTS("base transceiver station"),BSC("Base Station Controller");
+/**
+ * Typ wyliczeniowy reprezentujący typy stacji.
+ */
+public enum StationType {
+    BTS, BSC
 
-   StationType(String str) {
-   }
 }

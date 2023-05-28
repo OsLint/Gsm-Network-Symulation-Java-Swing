@@ -3,28 +3,32 @@ package Logic;
 import Events.RefreshEvent;
 import Events.RefreshListner;
 import Exeptions.NumberNotFoundExeption;
-import Graphics.Visualisations.LayerVisual;
-import Graphics.Visualisations.VRDvisual;
+
 import Graphics.Window;
 import InterfaceLink.VBDlink;
-import InterfaceLink.VRDlink;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
-public class VBD implements VBDlink ,Runnable {
 
-    //Pola prywatne
+/**
+ * Klasa VBD reprezentuje urządzenie VBD.
+ * Implementuje interfejs VBDlink i Runnable.
+ */
+public class VBD implements VBDlink, Runnable {
     private static int countId;
     private Message message;
     private int frequency;
     private boolean isWorking;
     private boolean isWaiting;
-    private int Id;
-    private Thread thread;
-    private ArrayList<RefreshListner> listners = new ArrayList<>();
+    private final int Id;
+    private final ArrayList<RefreshListner> listners = new ArrayList<>();
 
-    //Konstruktor
+    /**
+     * Konstruktor klasy VBD.
+     *
+     * @param message wiadomość do przesyłania
+     */
     public VBD(Message message) {
         countId++;
         this.message = message;
@@ -34,63 +38,27 @@ public class VBD implements VBDlink ,Runnable {
         this.Id = countId;
 
         // Tworzenie i uruchamianie wątku
-        thread = new Thread(this);
+        Thread thread = new Thread(this);
         thread.start();
     }
 
 
-    //Settery
-    @Override
-    public void setMessage(Message message) {
-        this.message= message;
-    }
-    @Override
-    public void setFrequency(int frequency) {
-        this.frequency = frequency;
-    }
-    @Override
-    public void setIsWorking(boolean working) {
-        this.isWorking = working;
-    }
-    @Override
-    public void setIsWaiting(boolean waiting) {
-        this.isWaiting = waiting;
-    }
-
-    //Gettery
-    @Override
-    public Message getMessage() {
-        return message;
-    }
-    @Override
-    public int getFrequency() {
-        return frequency;
-    }
-    @Override
-    public int getID() {
-        return Id;
-    }
-    @Override
-    public boolean getIsWorking() {
-        return isWorking;
-    }
-    @Override
-    public boolean getIsWaiting() {
-        return isWaiting;
-    }
+    /**
+     * Metoda losująca numer VRD.
+     *
+     * @return wylosowany numer VRD
+     */
     @Override
     public int randomVRD() {
         if (Window.VRDlist == null || Window.VRDlist.isEmpty()) {
             try {
                 throw new NumberNotFoundExeption(0);
             } catch (NumberNotFoundExeption nnfe) {
-                //2 do posprzątaj i zastanów się czy chcesz wyświetlać komunikat
                 System.out.println("Debug: " + "Nie istnieje dostępne " +
                         "urządzenie VRD. \n " +
                         "VDB: " + this.getID() + " oczekuje na dostępny VRD.");
             }
-        }else {
-            //Debbug: System.out.println(Window.VRDlist.size());
+        } else {
             Random random = new Random();
             int randomIndex = random.nextInt(Window.VRDlist.size());
             VRD tempVRD = Window.VRDlist.get(randomIndex);
@@ -100,65 +68,156 @@ public class VBD implements VBDlink ,Runnable {
         return 0; //nie zaistnieje VRD o takim ID
     }
 
+    /**
+     * Metoda wysyłająca wiadomość do stacji docelowej.
+     *
+     * @param message wiadomość do wysłania
+     */
     @Override
-    public void sendMessage( Message message) {
-        //2DO
+    public void sendMessage(Message message) {
         Station nextStation = findMostEmptyStation();
         nextStation.reciveMessage(message);
 
     }
 
+    /**
+     * Metoda znajdująca stację o najmniejszej liczbie wiadomości.
+     *
+     * @return stacja o najmniejszej liczbie wiadomości
+     */
     @Override
     public Station findMostEmptyStation() {
         Station mostEmptyStation;
 
         if (!(Window.layers.get(0).stationList.isEmpty())) {
             mostEmptyStation = Collections.min(Window.layers.get(0).stationList);
-        }else {
+        } else {
             return null;
         }
-        //System.out.println(mostEmptyStation);
         return mostEmptyStation;
     }
-    //Medota odpowiedzialna za wątek
+
+    /**
+     * Metoda reprezentująca wątek działający dla VBD.
+     */
     @Override
     public void run() {
         while (isWorking) {
-            if(isWaiting){
+            if (isWaiting) {
                 try {
-                    Thread.sleep(100);
+                    synchronized (this) {
+                        wait();
+                    }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-            }else {
+            } else {
                 int VRDnumber = randomVRD();
-                if(VRDnumber != 0) {
+                if (VRDnumber != 0) {
 
                     message.setAdress(VRDnumber);
                     sendMessage(this.getMessage());
-                }else {
-                    fireRefresh(new RefreshEvent(this,this));
+                } else {
+                    fireRefresh(new RefreshEvent(this, this));
                 }
             }
             try {
-                Thread.sleep(1000 / frequency);
+                synchronized (this) {
+                    wait(1000 / frequency);
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
-            System.out.println(Window.layers.get(0).stationList.size());
-
         }
     }
+
+    /**
+     * Metoda wywołująca zdarzenie odświeżenia.
+     *
+     * @param refreshEvent zdarzenie odświeżenia
+     */
     private void fireRefresh(RefreshEvent refreshEvent) {
         for (RefreshListner listener : listners) {
             listener.refresh(refreshEvent);
         }
     }
+
+    /**
+     * Metoda dodająca słuchacza odświeżenia.
+     *
+     * @param listner słuchacz odświeżenia
+     */
     public void addRefreshListner(RefreshListner listner) {
         this.listners.add(listner);
     }
-    public void removeRefreshListner(RefreshListner listner) {
-        this.listners.remove(listner);
+
+    /**
+     * Ustawia wiadomość dla VBD.
+     *
+     * @param message wiadomość do ustawienia
+     */
+    @Override
+    public void setMessage(Message message) {
+        this.message = message;
+    }
+
+    /**
+     * Ustawia częstotliwość dla VBD.
+     *
+     * @param frequency częstotliwość do ustawienia
+     */
+    @Override
+    public void setFrequency(int frequency) {
+        this.frequency = frequency;
+    }
+
+    /**
+     * Ustawia stan pracy VBD.
+     *
+     * @param working stan pracy do ustawienia
+     */
+    @Override
+    public void setIsWorking(boolean working) {
+        this.isWorking = working;
+    }
+
+    /**
+     * Ustawia stan oczekiwania VBD.
+     *
+     * @param waiting stan oczekiwania do ustawienia
+     */
+    @Override
+    public void setIsWaiting(boolean waiting) {
+        this.isWaiting = waiting;
+    }
+
+    /**
+     * Zwraca aktualną wiadomość VBD.
+     *
+     * @return aktualna wiadomość VBD
+     */
+    @Override
+    public Message getMessage() {
+        return message;
+    }
+
+    /**
+     * Zwraca aktualną częstotliwość VBD.
+     *
+     * @return aktualna częstotliwość VBD
+     */
+    @Override
+    public int getFrequency() {
+        return frequency;
+    }
+
+    /**
+     * Zwraca identyfikator VBD.
+     *
+     * @return identyfikator VBD
+     */
+    @Override
+    public int getID() {
+        return Id;
     }
 }

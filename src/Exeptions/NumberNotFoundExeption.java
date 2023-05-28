@@ -1,19 +1,27 @@
 package Exeptions;
 
-public class NumberNotFoundExeption extends Exception{
-    private int reciverNumber;
-    private String name;
-    public NumberNotFoundExeption (int reciverNumber) {
-        super("Not existing number of Receiving Device: " + reciverNumber);
-        this.reciverNumber = reciverNumber;
+/**
+ * Wyjątek rzucany w przypadku nieistniejącego numeru odbiorcy.
+ */
+public class NumberNotFoundExeption extends Exception {
+    private final int receiverNumber;
+    /**
+     * Konstruktor klasy NumberNotFoundException.
+     * Inicjalizuje wyjątek z informacją o nieistniejącym numerze odbiorcy.
+     *
+     * @param receiverNumber Numer odbiorcy, który nie został znaleziony.
+     */
+    public NumberNotFoundExeption(int receiverNumber) {
+        super("Not existing number of Receiving Device: " + receiverNumber);
+        this.receiverNumber = receiverNumber;
+    }
+    /**
+     * Metoda zwraca numer odbiorcy, który nie został znaleziony.
+     *
+     * @return Numer odbiorcy.
+     */
+    public int getReceiverNumber() {
+        return receiverNumber;
     }
 
-
-    public int getReciverNumber() {
-        return reciverNumber;
-    }
-
-    public String getName() {
-        return name;
-    }
 }

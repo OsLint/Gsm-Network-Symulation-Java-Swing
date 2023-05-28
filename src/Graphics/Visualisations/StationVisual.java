@@ -7,25 +7,28 @@ import Logic.Station;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
+/**
+ * Klasa StationVisual.
+ * Panel reprezentujący wizualizację stacji.
+ */
 public class StationVisual extends JPanel implements RefreshListner {
-    private JLabel idLabel;
-    private JLabel processedMessageCounterLabel;
-    private JLabel waitingMessageCounterLabel;
-    private int messagesInDeck;
-    private StationLink stationLink;
-    private ArrayList<RefreshListner> listners = new ArrayList<>();
+    private final JLabel processedMessageCounterLabel;
+    private final JLabel waitingMessageCounterLabel;
 
+    /**
+     * Konstruktor klasy StationVisual.
+     * Inicjalizuje panel wizualizacji stacji na podstawie obiektu StationLink.
+     *
+     * @param stationLink Obiekt StationLink reprezentujący stację.
+     */
     public StationVisual(StationLink stationLink) {
-        this.stationLink = stationLink;
-        this.messagesInDeck = stationLink.getWaitingMessageCounter();
-        setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
-        setMaximumSize(new Dimension(Integer.MAX_VALUE,200));
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setMaximumSize(new Dimension(Integer.MAX_VALUE, 200));
         setMinimumSize(new Dimension(Integer.MAX_VALUE, 200));
 
         //Inicjalizacja komponentów
-        idLabel = new JLabel("Id: " + stationLink.getId());
+        JLabel idLabel = new JLabel("Id: " + stationLink.getId());
         processedMessageCounterLabel = new JLabel(
                 "Processed: " + stationLink.getProcessedMessageCounter()
         );
@@ -34,11 +37,11 @@ public class StationVisual extends JPanel implements RefreshListner {
         );
 
         //Id label
-        idLabel.setPreferredSize(new Dimension(150,50));
-        idLabel.setMinimumSize(new Dimension(Integer.MAX_VALUE,30));
-        idLabel.setMaximumSize(new Dimension(Integer.MAX_VALUE,50));
+        idLabel.setPreferredSize(new Dimension(150, 50));
+        idLabel.setMinimumSize(new Dimension(Integer.MAX_VALUE, 30));
+        idLabel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50));
         idLabel.setBackground(new Color(227, 244, 244));
-        idLabel.setFont(new Font("Arial",Font.BOLD,20));
+        idLabel.setFont(new Font("Arial", Font.BOLD, 20));
 
 
         //Dodanie komponentów do panelu
@@ -47,10 +50,15 @@ public class StationVisual extends JPanel implements RefreshListner {
         add(waitingMessageCounterLabel);
 
 
-
         setBackground(new Color(248, 246, 244));
     }
 
+    /**
+     * Metoda refresh.
+     * Aktualizuje wyświetlane wartości liczników wiadomości na podstawie zdarzenia RefreshEvent.
+     *
+     * @param evt Zdarzenie RefreshEvent.
+     */
     @Override
     public void refresh(RefreshEvent evt) {
         Station station = evt.getStation();

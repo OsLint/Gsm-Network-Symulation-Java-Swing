@@ -3,8 +3,11 @@ package Graphics.Panels;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
+/**
+ * Klasa PanelTemplate.
+ * Abstrakcyjna klasa szablonowa dla paneli.
+ */
 public abstract class PanelTemplate extends JPanel {
     protected JScrollPane deviceScrollPane;
     protected JButton addButton;
@@ -13,11 +16,16 @@ public abstract class PanelTemplate extends JPanel {
 
     protected String title;
 
-
-    public  PanelTemplate (String title) {
+    /**
+     * Konstruktor klasy PanelTemplate.
+     * Inicjalizuje panel z podanym tytułem.
+     *
+     * @param title Tytuł panelu.
+     */
+    public PanelTemplate(String title) {
         this.title = title;
         setPreferredSize(new Dimension(
-                (Toolkit.getDefaultToolkit().getScreenSize().width)/3,
+                (Toolkit.getDefaultToolkit().getScreenSize().width) / 3,
                 Toolkit.getDefaultToolkit().getScreenSize().height
         ));
         setLayout(new BorderLayout());
@@ -37,18 +45,13 @@ public abstract class PanelTemplate extends JPanel {
         deviceScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         deviceScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-        addButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                handleAddButtonAction(e);
-            }
-        });
+        // Obsługa zdarzenia kliknięcia przycisku "Add"
+        addButton.addActionListener(this::handleAddButtonAction);
 
-
-        add(titleTextField,BorderLayout.NORTH);
-        add(deviceScrollPane,BorderLayout.CENTER);
-        add(addButton,BorderLayout.SOUTH);
-
+        // Dodawanie komponentów do panelu
+        add(titleTextField, BorderLayout.NORTH);
+        add(deviceScrollPane, BorderLayout.CENTER);
+        add(addButton, BorderLayout.SOUTH);
 
 
         setBackground(new Color(248, 246, 244));
@@ -56,6 +59,11 @@ public abstract class PanelTemplate extends JPanel {
 
     }
 
+    /**
+     * Metoda abstrakcyjna do obsługi zdarzenia kliknięcia przycisku "Add".
+     *
+     * @param e Obiekt reprezentujący zdarzenie akcji.
+     */
     protected abstract void handleAddButtonAction(ActionEvent e);
 
 }

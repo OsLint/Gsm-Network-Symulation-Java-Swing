@@ -3,19 +3,25 @@ package Graphics.Visualisations;
 import Events.RefreshEvent;
 import Events.RefreshListner;
 import InterfaceLink.VBDlink;
-import Logic.VBD;
 
 import javax.swing.*;
 import java.awt.*;
 
 import static Graphics.Window.VBDlist;
 
+/**
+ * Klasa VBDvisual.
+ * Panel reprezentujący wizualizację VBD.
+ */
 public class VBDvisual extends JPanel implements RefreshListner {
-    private JLabel messageLabel;
-    private JSlider frequencySlider;
-    private JButton stopButton;
-    private JTextField idTextField;
-    private JComboBox statusComboBox;
+    private final JSlider frequencySlider;
+    private final JComboBox<String> statusComboBox;
+    /**
+     * Konstruktor klasy VBDvisual.
+     * Inicjalizuje panel wizualizacji VBD na podstawie obiektu VBDlink.
+     *
+     * @param vbDlink Obiekt VBDlink reprezentujący VBD.
+     */
     public VBDvisual (VBDlink vbDlink) {
 
         setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
@@ -24,11 +30,11 @@ public class VBDvisual extends JPanel implements RefreshListner {
 
 
         //Inicjalizacja komponentów
-        messageLabel = new JLabel("Message: " + vbDlink.getMessage());
+        JLabel messageLabel = new JLabel("Message: " + vbDlink.getMessage());
         frequencySlider = new JSlider(JSlider.HORIZONTAL,1,5,vbDlink.getFrequency());
-        stopButton = new JButton("Stop");
-        idTextField = new JTextField("ID: " + vbDlink.getID());
-        statusComboBox = new JComboBox(new String[] {"ACTIVE", "WAITING"});
+        JButton stopButton = new JButton("Stop");
+        JTextField idTextField = new JTextField("ID: " + vbDlink.getID());
+        statusComboBox = new JComboBox<>(new String[]{"ACTIVE", "WAITING"});
 
         //Id text field
         idTextField.setPreferredSize(new Dimension(150,50));
@@ -43,9 +49,7 @@ public class VBDvisual extends JPanel implements RefreshListner {
         frequencySlider.setPaintTicks(true);
         frequencySlider.setPaintLabels(true);
         frequencySlider.setSnapToTicks(true);
-        frequencySlider.addChangeListener(e -> {
-            vbDlink.setFrequency(frequencySlider.getValue());
-        });
+        frequencySlider.addChangeListener(e -> vbDlink.setFrequency(frequencySlider.getValue()));
 
         //Stop button
         stopButton.addActionListener(e -> {
@@ -65,7 +69,9 @@ public class VBDvisual extends JPanel implements RefreshListner {
                 if (selectedStatus.equals("ACTIVE")){
                     vbDlink.setIsWaiting(false);
                     vbDlink.setIsWorking(true);
-                    System.out.println(vbDlink);
+                    synchronized (vbDlink) {
+                        vbDlink.notifyAll();
+                    }
                 } else if (selectedStatus.equals("WAITING")) {
                     vbDlink.setIsWaiting(true);
                 }
@@ -79,13 +85,17 @@ public class VBDvisual extends JPanel implements RefreshListner {
         add(stopButton);
         add(statusComboBox);
 
-        // setPreferredSize(new Dimension(250, 150));
         setBackground(new Color(248, 246, 244));
 
     }
+    /**
+     * Metoda refresh.
+     * Ustawia status ComboBox na "WAITING" na podstawie zdarzenia RefreshEvent.
+     *
+     * @param evt Zdarzenie RefreshEvent.
+     */
     @Override
     public void refresh(RefreshEvent evt) {
-        VBD vbd= evt.getVbd();
         statusComboBox.setSelectedItem("WAITING");
     }
 }

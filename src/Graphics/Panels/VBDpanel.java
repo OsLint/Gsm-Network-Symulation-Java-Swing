@@ -1,41 +1,46 @@
 package Graphics.Panels;
 
-import Events.RefreshEvent;
-import Exeptions.NumberNotFoundExeption;
 import Graphics.Visualisations.VBDvisual;
-import Graphics.Window;
 import Logic.Message;
 import Logic.VBD;
-import Logic.VRD;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.util.Random;
 
 import static Graphics.Window.VBDlist;
 
+/**
+ * Klasa VBDpanel.
+ * Panel dla Virtual Brodcast Device (VBD).
+ */
 public class VBDpanel extends PanelTemplate {
+    /**
+     * Konstruktor klasy VBDpanel.
+     * Inicjalizuje panel dla VBD z podanym tytułem.
+     *
+     * @param title Tytuł panelu.
+     */
     public VBDpanel(String title) {
         super(title);
     }
 
+    /**
+     * Obsługuje akcję naciśnięcia przycisku "Add".
+     * Tworzy nowy VBD na podstawie wprowadzonej wiadomości, dodaje go do listy VBD oraz do panelu.
+     * Aktualizuje widok aplikacji po wykonaniu operacji.
+     *
+     * @param e Obiekt reprezentujący zdarzenie akcji.
+     */
     @Override
     protected void handleAddButtonAction(ActionEvent e) {
         String message = JOptionPane.showInputDialog("Wprowadź wiadomość:");
 
-        // Utworzenie nowego urządzenia nadawczego na podstawie wprowadzonej wiadomości
-
-
-        //Tymczasowa metoda:
-
-
-        //int randomVRD = randomVRD();
         VBD newVBD = new VBD(new Message(message));
         VBDvisual newVBDvisual = new VBDvisual(newVBD);
         //Refresh listner
         newVBD.addRefreshListner(newVBDvisual);
 
-        // Dodanie nowego urządzenia do listy
+        // Dodanie nowego urządzenia do listy VBD
         VBDlist.add(newVBD);
 
         // Dodanie nowego urządzenia do panelu z urządzeniami
@@ -46,19 +51,5 @@ public class VBDpanel extends PanelTemplate {
         deviceScrollPane.repaint();
     }
 
-   /* //tymczasowa metoda
-    public int randomVRD() {
-        if (Window.VRDlist == null || Window.VRDlist.isEmpty()) {
-            System.out.println("Nie ma dostępnego vrd");
-            return 0; //nie zaistnieje VRD o takim ID
-        }else {
-            System.out.println(Window.VRDlist.size());
-            Random random = new Random();
-            int randomIndex = random.nextInt(Window.VRDlist.size());
-            VRD tempVRD = Window.VRDlist.get(randomIndex);
-
-            return tempVRD.getID();
-        }
-    }*/
 
 }
