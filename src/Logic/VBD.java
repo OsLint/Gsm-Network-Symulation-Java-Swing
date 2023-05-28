@@ -16,7 +16,6 @@ import java.util.Random;
  * Implementuje interfejs VBDlink i Runnable.
  */
 public class VBD implements VBDlink, Runnable {
-    private static int countId;
     private Message message;
     private int frequency;
     private boolean isWorking;
@@ -30,12 +29,13 @@ public class VBD implements VBDlink, Runnable {
      * @param message wiadomość do przesyłania
      */
     public VBD(Message message) {
-        countId++;
+
+        Window.phoneNumbers++;
         this.message = message;
         this.frequency = 1;
         this.isWorking = true;
         this.isWaiting = false;
-        this.Id = countId;
+        this.Id = Window.phoneNumbers;
 
         // Tworzenie i uruchamianie wątku
         Thread thread = new Thread(this);

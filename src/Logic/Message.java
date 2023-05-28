@@ -18,13 +18,6 @@ public class Message {
         this.content = content;
     }
 
-    public Byte[] encodeMessage() {
-
-        return null;
-    }
-
-
-
     /**
      * Ustawia adres docelowy wiadomości.
      *

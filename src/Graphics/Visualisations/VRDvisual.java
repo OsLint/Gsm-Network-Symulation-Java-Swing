@@ -32,7 +32,7 @@ public class VRDvisual extends JPanel implements RefreshListner {
 
         //Inicjalizacja komponentów
         this.vrDlink = vrDlink;
-        JTextField idTextField = new JTextField("ID: " + vrDlink.getID());
+        JTextField idTextField = new JTextField("Phone Number: +48" + vrDlink.getID());
         JButton stopButton = new JButton("Stop");
         messageCounter = new JLabel(
                 "Message count: " +

@@ -23,6 +23,7 @@ public class Window extends JFrame {
     public static ArrayList<VBD> VBDlist = new ArrayList<>();
     public static ArrayList<VRD> VRDlist = new ArrayList<>();
     public static ArrayList<LayerVisual> layers = new ArrayList<>();
+    public static int phoneNumbers = 504111111;
 
     private final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private final int width = (int) screenSize.getWidth();

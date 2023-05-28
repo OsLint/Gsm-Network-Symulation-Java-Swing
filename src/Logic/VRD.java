@@ -2,6 +2,7 @@ package Logic;
 
 import Events.RefreshEvent;
 import Events.RefreshListner;
+import Graphics.Window;
 import InterfaceLink.VRDlink;
 
 import java.util.ArrayList;
@@ -24,10 +25,11 @@ public class VRD implements VRDlink, Runnable {
      * Tworzy wątek główny.
      */
     public VRD() {
-        countId++;
+
         this.isWorking = true;
         this.receivedMessageCounter = 0;
-        this.Id = countId;
+        Window.phoneNumbers ++;
+        this.Id = Window.phoneNumbers;
         resetMesagesCounter = false;
 
         // Tworzenie i uruchamianie głównego wątku
@@ -77,7 +79,7 @@ public class VRD implements VRDlink, Runnable {
      */
     @Override
     public void stopResetMessageCount() {
-        refreshThread.interrupt();
+        resetMesagesCounter = false;
     }
 
     /**

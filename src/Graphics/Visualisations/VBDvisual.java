@@ -34,7 +34,7 @@ public class VBDvisual extends JPanel implements RefreshListner {
         JLabel messageLabel = new JLabel("Message: " + vbDlink.getMessage());
         frequencySlider = new JSlider(JSlider.HORIZONTAL,1,5,vbDlink.getFrequency());
         JButton stopButton = new JButton("Stop");
-        JTextField idTextField = new JTextField("ID: " + vbDlink.getID());
+        JTextField idTextField = new JTextField("Phone Number: +48" + vbDlink.getID());
         statusComboBox = new JComboBox<>(new String[]{"ACTIVE", "WAITING"});
 
         //Id text field

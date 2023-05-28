@@ -40,7 +40,7 @@ public class StationVisual extends JPanel implements RefreshListner {
         );
 
         //waitingMessageCounterLabel
-        waitingMessageCounterLabel.setForeground(new Color(0, 191, 255));
+        waitingMessageCounterLabel.setForeground(new Color(50, 10, 255));
 
         // Tworzenie i ustawianie ramki
         this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
