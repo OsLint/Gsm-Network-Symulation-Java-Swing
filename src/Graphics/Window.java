@@ -44,7 +44,7 @@ public class Window extends JFrame {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                new FileHandler("test1");
+                new FileHandler();
             }
         });
 

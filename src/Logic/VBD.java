@@ -21,6 +21,7 @@ public class VBD implements VBDlink, Runnable {
     private boolean isWorking;
     private boolean isWaiting;
     private final int Id;
+    private int messageSendedCounter;
     private final ArrayList<RefreshListner> listners = new ArrayList<>();
 
     /**
@@ -41,6 +42,7 @@ public class VBD implements VBDlink, Runnable {
         Thread thread = new Thread(this);
         thread.start();
     }
+
 
 
     /**
@@ -79,6 +81,7 @@ public class VBD implements VBDlink, Runnable {
     public void sendMessage(Message message) {
         Station nextStation = findMostEmptyStation();
         nextStation.reciveMessage(message);
+        messageSendedCounter++;
 
     }
 
@@ -221,5 +224,13 @@ public class VBD implements VBDlink, Runnable {
     @Override
     public int getID() {
         return Id;
+    }
+
+    /**
+     * Zwraca ilośc wysłanych wiadomości przez VBD
+     * @return ilośc wysłanych wiadomości przez VBD
+     */
+    public int getMessageSendedCounter() {
+        return messageSendedCounter;
     }
 }

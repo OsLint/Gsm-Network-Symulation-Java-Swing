@@ -38,10 +38,20 @@ public class Message {
     }
 
     /**
+     * Zwraca zawartość wiadomości
+     * @return zawartość wiadomości
+     */
+    public String getContent() {
+        return content;
+    }
+
+    /**
      * Zwraca treść wiadomości.
      *
      * @return treść wiadomości
      */
+
+
     @Override
     public String toString() {
         return content;
