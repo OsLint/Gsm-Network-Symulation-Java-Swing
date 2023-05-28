@@ -64,6 +64,8 @@ public class VRD implements VRDlink, Runnable {
     @Override
     public void reciveMessage(Message message) {
         receivedMessageCounter++;
+        RefreshEvent refreshEvent = new RefreshEvent(this, this);
+        fireRefresh(refreshEvent);
     }
 
     @Override

@@ -4,6 +4,7 @@ import Events.RefreshEvent;
 import Events.RefreshListner;
 import Exeptions.NumberNotFoundExeption;
 import Graphics.Visualisations.LayerVisual;
+import Graphics.Visualisations.StationVisual;
 import Graphics.Window;
 import InterfaceLink.StationLink;
 
@@ -22,7 +23,6 @@ public class Station implements StationLink,Runnable, Comparable<Station> {
     private StationType type;
     private ArrayList<Message> messagesInDeckList; //Oczekujące Wiadomości
     private Message currentMessage;
-    private int maxMessagesCap;
     private Thread thread; //Główny wątek
     private Thread refreshThread; //Poboczny wątek służący do odświerzania
     private ArrayList<RefreshListner> listeners = new ArrayList<>();
@@ -32,12 +32,8 @@ public class Station implements StationLink,Runnable, Comparable<Station> {
 
 
     public Station(StationType type) {
-
-
-
         this.working = true;
         this.type = type;
-        maxMessagesCap = 5;
         counterId++;
         Id=counterId;
         System.out.println("DEBUG: UTWORZONO STACJE: " + this.getId());
@@ -86,10 +82,7 @@ public class Station implements StationLink,Runnable, Comparable<Station> {
         System.out.println("Debug: Stacja: " + this + " wyłączono ");
         this.working = bol;
     }
-    @Override
-    public int getMaxMessageCap() {
-        return maxMessagesCap;
-    }
+
     @Override
     public LayerVisual findNextLayer() {
         for (int i = 0; i < Window.layers.size(); i++) {
@@ -115,6 +108,8 @@ public class Station implements StationLink,Runnable, Comparable<Station> {
         if(messagesInDeckList.size() < 5) {
             messagesInDeckList.add(message);
             waitingMessageCounter = messagesInDeckList.size();
+            RefreshEvent refreshEvent = new RefreshEvent(this, this);
+            fireRefresh(refreshEvent);
         }else {
             createNewStation(message);
         }
@@ -130,9 +125,14 @@ public class Station implements StationLink,Runnable, Comparable<Station> {
             }
         }
         if(CurrentLayer != null) {
-            Station newStaion = new Station(type);
-            newStaion.reciveMessage(message);
-            CurrentLayer.stationList.add(newStaion);
+            Station newStation = new Station(type);
+            StationVisual newStationVisual = new StationVisual(newStation);
+            newStation.reciveMessage(message);
+            newStation.addRefreshListener(newStationVisual);
+            CurrentLayer.stationList.add(newStation);
+            CurrentLayer.layerViewPort.add(newStationVisual);
+            CurrentLayer.revalidate();
+            CurrentLayer.repaint();
         }
     }
 
@@ -188,10 +188,14 @@ public class Station implements StationLink,Runnable, Comparable<Station> {
                 }
                 nextStation.reciveMessage(currentMessage);
                 messagesInDeckList.remove(currentMessage);
+                waitingMessageCounter = messagesInDeckList.size();
                 processedMessageCounter++;
             }else if (nextStation == null && currentMessage != null) {
                 try {
                    sendMessageToVRD(currentMessage);
+                   messagesInDeckList.remove(currentMessage);
+                   waitingMessageCounter = messagesInDeckList.size();
+                   processedMessageCounter++;
                 } catch (NumberNotFoundExeption e) {
                     Window.showInfoDialog("VRD Not Found","Nie odnaleziono obektu VRD",null);
                 }
@@ -223,8 +227,10 @@ public class Station implements StationLink,Runnable, Comparable<Station> {
         boolean messageSended = false;
         for (int i = 0; i < Window.VRDlist.size(); i++) {
             if((Window.VRDlist.get(i).getID()) == adress) {
-                Window.VRDlist.get(i).reciveMessage(message);
-                messageSended = true;
+                if(Window.VRDlist.get(i).getIsWorking()) {
+                    Window.VRDlist.get(i).reciveMessage(message);
+                    messageSended = true;
+                }
                 break;
             }
         }
@@ -232,6 +238,4 @@ public class Station implements StationLink,Runnable, Comparable<Station> {
             throw new NumberNotFoundExeption(adress);
         }
     }
-
-
 }

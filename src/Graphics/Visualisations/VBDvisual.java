@@ -4,13 +4,11 @@ import Events.RefreshEvent;
 import Events.RefreshListner;
 import InterfaceLink.VBDlink;
 import Logic.VBD;
-import Logic.VRD;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
+
+import static Graphics.Window.VBDlist;
 
 public class VBDvisual extends JPanel implements RefreshListner {
     private JLabel messageLabel;
@@ -50,31 +48,27 @@ public class VBDvisual extends JPanel implements RefreshListner {
         });
 
         //Stop button
-        stopButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                vbDlink.setIsWorking(false);
-                setVisible(false);
+        stopButton.addActionListener(e -> {
+            vbDlink.setIsWorking(false);
+            setVisible(false);
+            for (int i = 0; i < VBDlist.size(); i++) {
+                if(VBDlist.get(i) == vbDlink){
+                    VBDlist.remove(vbDlink);
+                }
             }
         });
 
         //statusComboBox
-        statusComboBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String selectedStatus = (String) statusComboBox.getSelectedItem();
-                if (selectedStatus != null) {
-                    if (selectedStatus.equals("ACTIVE")){
-                        vbDlink.setIsWaiting(false);
-                        vbDlink.setIsWorking(true);
-                        System.out.println(vbDlink);
-                    } else if (selectedStatus.equals("WAITING")) {
-                        vbDlink.setIsWaiting(true);
-                        //vbDlink.setIsWorking(false);
-
-                    }
+        statusComboBox.addActionListener(e -> {
+            String selectedStatus = (String) statusComboBox.getSelectedItem();
+            if (selectedStatus != null) {
+                if (selectedStatus.equals("ACTIVE")){
+                    vbDlink.setIsWaiting(false);
+                    vbDlink.setIsWorking(true);
+                    System.out.println(vbDlink);
+                } else if (selectedStatus.equals("WAITING")) {
+                    vbDlink.setIsWaiting(true);
                 }
-
             }
         });
 

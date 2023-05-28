@@ -110,14 +110,14 @@ public class VBD implements VBDlink ,Runnable {
 
     @Override
     public Station findMostEmptyStation() {
-        LayerVisual lv = Window.layers.get(0);
-        ArrayList<Station> accessibleStations = lv.stationList;
         Station mostEmptyStation;
-        if (!accessibleStations.isEmpty()) {
-            mostEmptyStation = Collections.min(accessibleStations);
+
+        if (!(Window.layers.get(0).stationList.isEmpty())) {
+            mostEmptyStation = Collections.min(Window.layers.get(0).stationList);
         }else {
             return null;
         }
+        //System.out.println(mostEmptyStation);
         return mostEmptyStation;
     }
     //Medota odpowiedzialna za wątek
@@ -145,6 +145,9 @@ public class VBD implements VBDlink ,Runnable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
+            System.out.println(Window.layers.get(0).stationList.size());
+
         }
     }
     private void fireRefresh(RefreshEvent refreshEvent) {

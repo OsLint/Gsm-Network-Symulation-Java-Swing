@@ -71,6 +71,11 @@ public class VRDvisual extends JPanel implements RefreshListner {
             public void actionPerformed(ActionEvent e) {
                 vrDlink.setIsWorking(false);
                 setVisible(false);
+                for (int i = 0; i < VRDlist.size(); i++) {
+                    if(VRDlist.get(i) == vrDlink){
+                        VRDlist.remove(vrDlink);
+                    }
+                }
             }
         });
         stopButton.setAlignmentX(Component.LEFT_ALIGNMENT);

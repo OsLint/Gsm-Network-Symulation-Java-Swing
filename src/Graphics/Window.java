@@ -38,6 +38,15 @@ public class Window extends JFrame {
             @Override
             public void windowClosing(WindowEvent e) {
                 FileHandler fileHandler = new FileHandler("test1");
+
+
+               /* Thread.getAllStackTraces().keySet().forEach(thread -> {
+                    System.out.println("Thread name: " + thread.getName());
+                    System.out.println("Thread ID: " + thread.getId());
+                    System.out.println("Thread state: " + thread.getState());
+                    System.out.println("----------------------------------------" + thread);
+                });*/
+
             }
         });
 

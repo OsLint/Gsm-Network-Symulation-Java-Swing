@@ -15,7 +15,7 @@ public class LayerVisual extends JPanel {
     private StationType type;
     private JLabel titleLabel;
     private String title;
-    private JPanel layerViewPort;
+    public JPanel layerViewPort;
 
     public LayerVisual(String title) {
 

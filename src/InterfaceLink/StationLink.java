@@ -16,7 +16,6 @@ public interface StationLink {
     Message getCurrentMessage();
     boolean getIsWorking();
     void setIsWorking(boolean bol);
-    int getMaxMessageCap();
     void createNewStation(Message message);
 
 }
