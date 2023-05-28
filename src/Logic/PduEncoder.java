@@ -2,6 +2,10 @@ package Logic;
 
 public class PduEncoder {
 
+    public PduEncoder () {
+
+    }
+
     public static byte[] encodePhoneNumber(int phoneNumber) {
      return null;
     }
@@ -15,7 +19,7 @@ public class PduEncoder {
     }
 
     public static void test() {
-        
+        System.out.println("tesdasds");
     }
 
 }

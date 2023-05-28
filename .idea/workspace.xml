@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="93f26dbf-e6d3-4fdd-a663-ba64ff6526ab" name="Changes" comment="[#1]Beta Version 0.6&#10;Fixed: Minor Bug Fix">
-      <change beforePath="$PROJECT_DIR$/src/Logic/VRD.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Logic/VRD.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Logic/PduEncoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Logic/PduEncoder.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +77,7 @@
       <workItem from="1685122366905" duration="5122000" />
       <workItem from="1685128508150" duration="6918000" />
       <workItem from="1685172375480" duration="37456000" />
-      <workItem from="1685278252267" duration="12491000" />
+      <workItem from="1685278252267" duration="12896000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1684163803479</created>
@@ -204,7 +205,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685291283108</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="[#1]Beta Version 0.6&#10;Fixed: Minor Bug Fix">
+      <created>1685291310481</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1685291310481</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
