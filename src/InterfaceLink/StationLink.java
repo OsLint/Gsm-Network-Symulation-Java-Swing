@@ -20,5 +20,6 @@ public interface StationLink {
 
     void setIsWorking(boolean bol);
     void createNewStation(Message message);
+    void turnOff();
 
 }

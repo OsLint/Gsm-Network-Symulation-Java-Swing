@@ -83,7 +83,7 @@ public class LayerVisual extends JPanel {
      */
     public void turnOff() {
         for (Station station : stationList) {
-            station.setIsWorking(false);
+            station.turnOff();
         }
     }
 

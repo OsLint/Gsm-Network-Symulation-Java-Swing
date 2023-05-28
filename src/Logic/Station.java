@@ -209,6 +209,39 @@ public class Station implements StationLink, Runnable, Comparable<Station> {
     }
 
     /**
+     * "Wyłącza" stacje wysyłając wszystkie wiadomości z pominięciem delaya
+     */
+    @Override
+    public void turnOff() {
+        this.setIsWorking(false);
+        for (int i = 0; i < messagesInDeckList.size(); i++) {
+            Station nextStation = findNextStation();
+            Message currentMessage = messagesInDeckList.get(i);
+            if (nextStation != null && currentMessage != null) {
+                for (Message message : messagesInDeckList) {
+                    if (message != null) {
+                        currentMessage = message;
+                        break;
+                    }
+                }
+                nextStation.reciveMessage(currentMessage);
+                messagesInDeckList.remove(currentMessage);
+                waitingMessageCounter = messagesInDeckList.size();
+                processedMessageCounter++;
+            } else if (nextStation == null && currentMessage != null) {
+                try {
+                    sendMessageToVRD(currentMessage);
+                    messagesInDeckList.remove(currentMessage);
+                    waitingMessageCounter = messagesInDeckList.size();
+                    processedMessageCounter++;
+                } catch (NumberNotFoundExeption e) {
+                    Window.showInfoDialog("VRD Not Found", "Nie odnaleziono obektu VRD", null);
+                }
+            }
+        }
+    }
+
+    /**
      * Pętla wątku odświeżającego.
      * Wywołuje zdarzenie odświeżenia dla słuchaczy.
      */
