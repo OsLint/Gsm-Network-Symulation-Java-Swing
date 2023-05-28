@@ -4,18 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93f26dbf-e6d3-4fdd-a663-ba64ff6526ab" name="Changes" comment="[#1]Beta Version 0.2&#10;Fixed: Warnings &#10;New: Documentation">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Graphics/Panels/PanelTemplate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Graphics/Panels/PanelTemplate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Graphics/Panels/VBDpanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Graphics/Panels/VBDpanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Graphics/Visualisations/LayerVisual.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Graphics/Visualisations/LayerVisual.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Graphics/Visualisations/StationVisual.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Graphics/Visualisations/StationVisual.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Graphics/Visualisations/VBDvisual.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Graphics/Visualisations/VBDvisual.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Graphics/Visualisations/VRDvisual.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Graphics/Visualisations/VRDvisual.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Logic/Station.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Logic/Station.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Logic/VBD.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Logic/VBD.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Logic/VRD.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Logic/VRD.java" afterDir="false" />
-    </list>
+    <list default="true" id="93f26dbf-e6d3-4fdd-a663-ba64ff6526ab" name="Changes" comment="[#1]Beta Version 0.3&#10;Fixed: Threads Synchronisation&#10;Fixed: New Color Palette&#10;Fixed: Better Graphic Design" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -85,7 +74,7 @@
       <workItem from="1685122366905" duration="5122000" />
       <workItem from="1685128508150" duration="6918000" />
       <workItem from="1685172375480" duration="37456000" />
-      <workItem from="1685278252267" duration="7702000" />
+      <workItem from="1685278252267" duration="8040000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1684163803479</created>
@@ -178,7 +167,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685281007618</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="[#1]Beta Version 0.3&#10;Fixed: Threads Synchronisation&#10;Fixed: New Color Palette&#10;Fixed: Better Graphic Design">
+      <created>1685286833481</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1685286833481</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -205,7 +201,8 @@
     <MESSAGE value="ThreadShaninigans" />
     <MESSAGE value="[#1]Beta Version 0.1&#10;Fixed: Odświerzanie nowo utworzonych stacji" />
     <MESSAGE value="[#1]Beta Version 0.2&#10;Fixed: Warnings &#10;New: Documentation" />
-    <option name="LAST_COMMIT_MESSAGE" value="[#1]Beta Version 0.2&#10;Fixed: Warnings &#10;New: Documentation" />
+    <MESSAGE value="[#1]Beta Version 0.3&#10;Fixed: Threads Synchronisation&#10;Fixed: New Color Palette&#10;Fixed: Better Graphic Design" />
+    <option name="LAST_COMMIT_MESSAGE" value="[#1]Beta Version 0.3&#10;Fixed: Threads Synchronisation&#10;Fixed: New Color Palette&#10;Fixed: Better Graphic Design" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
