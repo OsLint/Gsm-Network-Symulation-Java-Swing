@@ -6,6 +6,7 @@ import InterfaceLink.StationLink;
 import Logic.Station;
 
 import javax.swing.*;
+import javax.swing.border.EtchedBorder;
 import java.awt.*;
 
 /**
@@ -24,25 +25,32 @@ public class StationVisual extends JPanel implements RefreshListner {
      */
     public StationVisual(StationLink stationLink) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setMaximumSize(new Dimension(Integer.MAX_VALUE, 200));
-        setMinimumSize(new Dimension(Integer.MAX_VALUE, 200));
+        setPreferredSize(new Dimension(Integer.MAX_VALUE, 100));
+        setMaximumSize(new Dimension(Integer.MAX_VALUE, 100));
+        setMinimumSize(new Dimension(Integer.MAX_VALUE, 100));
 
         //Inicjalizacja komponentów
         JLabel idLabel = new JLabel("Id: " + stationLink.getId());
         processedMessageCounterLabel = new JLabel(
                 "Processed: " + stationLink.getProcessedMessageCounter()
         );
+
         waitingMessageCounterLabel = new JLabel(
                 "Waiting:" + stationLink.getWaitingMessageCounter()
         );
+
+        //waitingMessageCounterLabel
+        waitingMessageCounterLabel.setForeground(new Color(0, 191, 255));
+
+        // Tworzenie i ustawianie ramki
+        this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
 
         //Id label
         idLabel.setPreferredSize(new Dimension(150, 50));
         idLabel.setMinimumSize(new Dimension(Integer.MAX_VALUE, 30));
         idLabel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50));
-        idLabel.setBackground(new Color(227, 244, 244));
         idLabel.setFont(new Font("Arial", Font.BOLD, 20));
-
+        idLabel.setBackground(Color.yellow);
 
         //Dodanie komponentów do panelu
         add(idLabel);

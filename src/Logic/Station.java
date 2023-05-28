@@ -225,8 +225,10 @@ public class Station implements StationLink, Runnable, Comparable<Station> {
      * @param event Zdarzenie odświeżenia
      */
     private void fireRefresh(RefreshEvent event) {
-        for (RefreshListner listener : listeners) {
-            listener.refresh(event);
+        synchronized (listeners){
+            for (RefreshListner listener : listeners) {
+                listener.refresh(event);
+            }
         }
     }
 

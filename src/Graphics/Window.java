@@ -34,7 +34,7 @@ public class Window extends JFrame {
      */
     public Window() {
 
-        super("GuiSet03");
+        super("GSM SYMULATION");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(width, height);
         setVisible(true);
@@ -48,9 +48,9 @@ public class Window extends JFrame {
         });
 
 
-        VBDpanel VBDpanel = new VBDpanel("VBD Panel");
-        LayerPanel layerPanel = new LayerPanel("Layer Panel");
-        VRDpanel VRDpanel = new VRDpanel("VRD Panel");
+        VBDpanel VBDpanel = new VBDpanel("VBD PANEL");
+        LayerPanel layerPanel = new LayerPanel("LAYER PANEL");
+        VRDpanel VRDpanel = new VRDpanel("VRD PANEL");
 
 
         this.getContentPane().add(VBDpanel, BorderLayout.WEST);

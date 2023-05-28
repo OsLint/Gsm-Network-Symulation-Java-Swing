@@ -22,6 +22,7 @@ public class VBDpanel extends PanelTemplate {
      */
     public VBDpanel(String title) {
         super(title);
+
     }
 
     /**

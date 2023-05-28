@@ -36,6 +36,9 @@ public abstract class PanelTemplate extends JPanel {
         deviceScrollPane = new JScrollPane();
         viewportView = new JPanel();
 
+        //TitleTextField
+        titleTextField.setFont(new Font("Arial", Font.PLAIN, 15));
+        titleTextField.setHorizontalAlignment(SwingConstants.HORIZONTAL);
 
         //ViewPort
         viewportView.setLayout(new BoxLayout(viewportView, BoxLayout.Y_AXIS));
@@ -54,7 +57,9 @@ public abstract class PanelTemplate extends JPanel {
         add(addButton, BorderLayout.SOUTH);
 
 
-        setBackground(new Color(248, 246, 244));
+        this.setBackground(new Color(196, 223, 223));
+        viewportView.setBackground(new Color(210, 223, 223));
+        deviceScrollPane.setBackground(new Color(210, 223, 223));
 
 
     }

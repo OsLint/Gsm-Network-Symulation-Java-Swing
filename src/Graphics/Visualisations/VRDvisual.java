@@ -5,6 +5,7 @@ import Events.RefreshListner;
 import InterfaceLink.VRDlink;
 
 import javax.swing.*;
+import javax.swing.border.EtchedBorder;
 import java.awt.*;
 
 import static Graphics.Window.VRDlist;
@@ -53,6 +54,9 @@ public class VRDvisual extends JPanel implements RefreshListner {
         //MessageCounter
         messageCounter.setAlignmentX(Component.LEFT_ALIGNMENT);
 
+        // Tworzenie i ustawianie ramki
+        this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+
 
         //Id text field
         idTextField.setPreferredSize(new Dimension(150, 50));
@@ -64,6 +68,7 @@ public class VRDvisual extends JPanel implements RefreshListner {
         idTextField.setEditable(false);
 
         //Stop button
+        stopButton.setForeground(new Color(255, 0, 0));
         stopButton.addActionListener(e -> {
             vrDlink.setIsWorking(false);
             setVisible(false);

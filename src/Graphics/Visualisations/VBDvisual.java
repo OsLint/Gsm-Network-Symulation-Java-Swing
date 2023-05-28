@@ -5,6 +5,7 @@ import Events.RefreshListner;
 import InterfaceLink.VBDlink;
 
 import javax.swing.*;
+import javax.swing.border.EtchedBorder;
 import java.awt.*;
 
 import static Graphics.Window.VBDlist;
@@ -52,6 +53,7 @@ public class VBDvisual extends JPanel implements RefreshListner {
         frequencySlider.addChangeListener(e -> vbDlink.setFrequency(frequencySlider.getValue()));
 
         //Stop button
+        stopButton.setForeground(new Color(255, 0, 0));
         stopButton.addActionListener(e -> {
             vbDlink.setIsWorking(false);
             setVisible(false);
@@ -77,6 +79,9 @@ public class VBDvisual extends JPanel implements RefreshListner {
                 }
             }
         });
+
+        // Tworzenie i ustawianie ramki
+        this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
 
         //Dodanie komponentów do panelu
         add(idTextField);

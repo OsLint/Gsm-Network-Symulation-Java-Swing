@@ -4,6 +4,7 @@ import Logic.Station;
 import Logic.StationType;
 
 import javax.swing.*;
+import javax.swing.border.EtchedBorder;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -44,6 +45,8 @@ public class LayerVisual extends JPanel {
         JScrollPane deviceScrollPane = new JScrollPane();
         layerViewPort = new JPanel();
 
+
+
         //Dodaj RefreshListner
         baseStation.addRefreshListener(baseStationVisual);
 
@@ -56,16 +59,22 @@ public class LayerVisual extends JPanel {
         titleLabel.setMinimumSize(new Dimension(Integer.MAX_VALUE, 30));
         titleLabel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50));
         titleLabel.setBackground(new Color(227, 244, 244));
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        titleLabel.setFont(new Font("Arial", Font.PLAIN, 20));
+        titleLabel.setHorizontalAlignment(SwingConstants.HORIZONTAL);
 
         //Device ScrollPane
         deviceScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         deviceScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
+        // Tworzenie i ustawianie ramki
+        this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+
 
         add(deviceScrollPane, BorderLayout.CENTER);
         add(titleLabel, BorderLayout.NORTH);
         layerViewPort.add(baseStationVisual, BorderLayout.NORTH);
+
+        this.setBackground(new Color(227, 244, 244));
 
     }
 
