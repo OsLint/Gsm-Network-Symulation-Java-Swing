@@ -54,9 +54,11 @@ public class VBD implements VBDlink, Runnable {
             try {
                 throw new NumberNotFoundExeption(0);
             } catch (NumberNotFoundExeption nnfe) {
-                Window.showInfoDialog("Error","VBD: " + this.getID() + "\n" +
+                Window.showInfoDialog("VRD Not Found", "VBD: " + this.getID() + "\n" +
                         "Nie odnalazł dostępnego VRD.\n"
-                        + "VBD przechodzi w stan oczekiwania.",null);
+                        + "VBD przechodzi w stan oczekiwania.", null);
+                System.out.println("VBD: " + this.getID() + " Nie odnalazł dostępnego VRD. "
+                        + "VBD przechodzi w stan oczekiwania.");
             }
         } else {
             Random random = new Random();

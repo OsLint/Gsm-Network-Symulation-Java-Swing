@@ -102,7 +102,10 @@ public class Station implements StationLink, Runnable, Comparable<Station> {
                     waitingMessageCounter = messagesInDeckList.size();
                     processedMessageCounter++;
                 } catch (NumberNotFoundExeption e) {
-                    Window.showInfoDialog("VRD Not Found", "Nie odnaleziono obektu VRD", null);
+                    Window.showInfoDialog("VRD Not Found", "Nie odnaleziono obektu VRD: " +
+                            currentMessage.getAdress(), null);
+                    System.out.println("Station: "+ this.getId() + " Nie odnaleziono obektu VRD: " +
+                            currentMessage.getAdress());
                 }
             }
 
@@ -235,7 +238,8 @@ public class Station implements StationLink, Runnable, Comparable<Station> {
                     waitingMessageCounter = messagesInDeckList.size();
                     processedMessageCounter++;
                 } catch (NumberNotFoundExeption e) {
-                    Window.showInfoDialog("VRD Not Found", "Nie odnaleziono obektu VRD", null);
+                    System.out.println("Sation: "+ this.getId() + " Nie odnaleziono obektu VRD: " +
+                            currentMessage.getAdress() );
                 }
             }
         }
