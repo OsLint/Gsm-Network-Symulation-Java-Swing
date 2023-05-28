@@ -12,7 +12,6 @@ import java.util.ArrayList;
  * Implementuje interfejsy VRDlink i Runnable.
  */
 public class VRD implements VRDlink, Runnable {
-    private static int countId;
     private final int Id;
     private int receivedMessageCounter;
     private boolean isWorking;
