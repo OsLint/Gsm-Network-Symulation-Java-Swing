@@ -2,10 +2,7 @@ package InterfaceLink;
 
 import Logic.Message;
 
-/**
- * Interfejs VRDlink.
- * Definiuje metody dla połączeia części graficznej i logicznej VRD.
- */
+
 public interface VRDlink {
     void reciveMessage(Message message);
     void startResetMessageCount();

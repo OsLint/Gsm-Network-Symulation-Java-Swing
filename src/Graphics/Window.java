@@ -14,10 +14,6 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowAdapter;
 import java.util.ArrayList;
 
-/**
- * Klasa Window.
- * Główne okno aplikacji GUI.
- */
 public class Window extends JFrame {
 
     public static ArrayList<VBD> VBDlist = new ArrayList<>();
@@ -29,10 +25,7 @@ public class Window extends JFrame {
     private final int width = (int) screenSize.getWidth();
     private final int height = (int) screenSize.getHeight();
 
-    /**
-     * Konstruktor klasy Window.
-     * Inicjalizuje główne okno aplikacji GUI.
-     */
+
     public Window() {
 
         super("GSM SYMULATION");
@@ -59,36 +52,19 @@ public class Window extends JFrame {
         this.getContentPane().add(VRDpanel, BorderLayout.EAST);
     }
 
-    /**
-     * Metoda getWidth.
-     * Zwraca szerokość okna.
-     *
-     * @return Szerokość okna.
-     */
+
     @Override
     public int getWidth() {
         return width;
     }
 
-    /**
-     * Metoda getHeight.
-     * Zwraca wysokość okna.
-     *
-     * @return Wysokość okna.
-     */
+
     @Override
     public int getHeight() {
         return height;
     }
 
-    /**
-     * Metoda showInfoDialog.
-     * Wyświetla okno dialogowe z informacją.
-     *
-     * @param title   Tytuł okna dialogowego.
-     * @param message Treść informacji.
-     * @param icon    Ikona okna dialogowego.
-     */
+
     public static void showInfoDialog(String title, String message, ImageIcon icon) {
         JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE, icon);
     }

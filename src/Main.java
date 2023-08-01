@@ -1,8 +1,4 @@
-/**
- * GUI SET 03 "Sieć GSM"
- * Klasa główna programu, inicjalizuje okno aplikacji.
- * Autor: Oskar Kalbarczyk s27773 37c
- */
+
 
 import Graphics.Window;
 

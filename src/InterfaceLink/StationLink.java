@@ -5,10 +5,7 @@ import Logic.Message;
 import Logic.Station;
 import Logic.StationType;
 
-/**
- * Interfejs StationLink.
- * Definiuje metody wspólne dla połączeia części graficznej z logiczną Stacji.
- */
+
 public interface StationLink {
     int getId();
     int getProcessedMessageCounter();

@@ -8,22 +8,14 @@ import javax.swing.border.EtchedBorder;
 import java.awt.*;
 import java.util.ArrayList;
 
-/**
- * Klasa LayerVisual.
- * Panel reprezentujący warstwę wizualizacji.
- */
+
 public class LayerVisual extends JPanel {
     public ArrayList<Station> stationList;
     private StationType type;
     private final String title;
     public JPanel layerViewPort;
 
-    /**
-     * Konstruktor klasy LayerVisual.
-     * Inicjalizuje panel warstwy wizualizacji z podanym tytułem.
-     *
-     * @param title Tytuł warstwy.
-     */
+
     public LayerVisual(String title) {
 
         this.title = title;
@@ -35,7 +27,7 @@ public class LayerVisual extends JPanel {
         this.setType();
 
 
-        //Inicjalizacja komponentów
+
         stationList = new ArrayList<>();
         Station baseStation = new Station(type);
         StationVisual baseStationVisual = new StationVisual(baseStation);
@@ -47,14 +39,14 @@ public class LayerVisual extends JPanel {
 
 
 
-        //Dodaj RefreshListner
+
         baseStation.addRefreshListener(baseStationVisual);
 
-        //layerViewPort
+
         layerViewPort.setLayout(new BoxLayout(layerViewPort, BoxLayout.Y_AXIS));
         deviceScrollPane.setViewportView(layerViewPort);
 
-        //TitleLabel
+
         titleLabel.setPreferredSize(new Dimension(150, 50));
         titleLabel.setMinimumSize(new Dimension(Integer.MAX_VALUE, 30));
         titleLabel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50));
@@ -62,11 +54,11 @@ public class LayerVisual extends JPanel {
         titleLabel.setFont(new Font("Arial", Font.PLAIN, 20));
         titleLabel.setHorizontalAlignment(SwingConstants.HORIZONTAL);
 
-        //Device ScrollPane
+
         deviceScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         deviceScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-        // Tworzenie i ustawianie ramki
+
         this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
 
 
@@ -78,21 +70,14 @@ public class LayerVisual extends JPanel {
 
     }
 
-    /**
-     * Wyłącza wszystkie stacje w warstwie.
-     */
+
     public void turnOff() {
         for (Station station : stationList) {
             station.turnOff();
         }
     }
 
-    /**
-     * Sprawdza, czy warstwa zawiera daną stację.
-     *
-     * @param station Stacja do sprawdzenia.
-     * @return True, jeśli warstwa zawiera stację. False w przeciwnym przypadku.
-     */
+
     public boolean containsStation(Station station) {
         for (Station value : stationList) {
             if (station.getId() == value.getId()) {
@@ -102,18 +87,12 @@ public class LayerVisual extends JPanel {
         return false;
     }
 
-    /**
-     * Pobiera tytuł warstwy.
-     *
-     * @return Tytuł warstwy.
-     */
+
     public String getTitle() {
         return title;
     }
 
-    /**
-     * Ustawia typ warstwy na podstawie tytułu.
-     */
+
     public void setType() {
         if (this.getTitle().equalsIgnoreCase("BSC")) {
             this.type = StationType.BSC;

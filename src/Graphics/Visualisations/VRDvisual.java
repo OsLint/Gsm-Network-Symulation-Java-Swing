@@ -10,27 +10,19 @@ import java.awt.*;
 
 import static Graphics.Window.VRDlist;
 
-/**
- * Klasa VRDvisual.
- * Panel reprezentujący wizualizację VRD.
- */
+
 public class VRDvisual extends JPanel implements RefreshListner {
     private final JLabel messageCounter;
     private final JCheckBox clearTimeCheckBox;
     private final VRDlink vrDlink;
 
-    /**
-     * Konstruktor klasy VRDvisual.
-     * Inicjalizuje panel wizualizacji VRD na podstawie obiektu VRDlink.
-     *
-     * @param vrDlink Obiekt VRDlink reprezentujący VRD.
-     */
+
     public VRDvisual(VRDlink vrDlink) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setMaximumSize(new Dimension(Integer.MAX_VALUE, 200));
         setMinimumSize(new Dimension(Integer.MAX_VALUE, 200));
 
-        //Inicjalizacja komponentów
+
         this.vrDlink = vrDlink;
         JTextField idTextField = new JTextField("Phone Number: +48" + vrDlink.getID());
         JButton stopButton = new JButton("Stop");
@@ -41,7 +33,6 @@ public class VRDvisual extends JPanel implements RefreshListner {
         clearTimeCheckBox = new JCheckBox("Reset Counter");
 
 
-        //ClearTimeCheckBox
         clearTimeCheckBox.setAlignmentX(Component.LEFT_ALIGNMENT);
         clearTimeCheckBox.addActionListener(e -> {
             if (clearTimeCheckBox.isSelected()) {
@@ -51,14 +42,14 @@ public class VRDvisual extends JPanel implements RefreshListner {
             }
         });
 
-        //MessageCounter
+
         messageCounter.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        // Tworzenie i ustawianie ramki
+
         this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
 
 
-        //Id text field
+
         idTextField.setPreferredSize(new Dimension(150, 50));
         idTextField.setBackground(new Color(227, 244, 244));
         idTextField.setMinimumSize(new Dimension(Integer.MAX_VALUE, 30));
@@ -67,7 +58,7 @@ public class VRDvisual extends JPanel implements RefreshListner {
         idTextField.setAlignmentX(Component.LEFT_ALIGNMENT);
         idTextField.setEditable(false);
 
-        //Stop button
+
         stopButton.setForeground(new Color(255, 0, 0));
         stopButton.addActionListener(e -> {
             vrDlink.setIsWorking(false);
@@ -81,7 +72,6 @@ public class VRDvisual extends JPanel implements RefreshListner {
         stopButton.setAlignmentX(Component.LEFT_ALIGNMENT);
 
 
-        //Dodanie komponentów do panelu
         add(idTextField);
         add(stopButton);
         add(messageCounter);
@@ -92,12 +82,7 @@ public class VRDvisual extends JPanel implements RefreshListner {
 
     }
 
-    /**
-     * Metoda refresh.
-     * Aktualizuje wyświetlaną liczbę wiadomości na podstawie zdarzenia RefreshEvent.
-     *
-     * @param evt Zdarzenie RefreshEvent.
-     */
+
     @Override
     public void refresh(RefreshEvent evt) {
         messageCounter.setText("Message count: " + vrDlink.getReceivedMessageCount());
